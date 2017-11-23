@@ -4,15 +4,15 @@
 
 	switch ($scena) {
 		case 1:
-			$path = "../olga_1/olga_1.json";
+			$path = "../olga_1/scene.json";
 			break;
 
 		case 2:
-			$path = "../olga_2_multi/olga_2.json";
+			$path = "../olga_2_multi/scene.json";
 			break;
 
 		case 3:
-			$path = "../ninni_2_multi/ninni_2_multi.json";
+			$path = "../ninni_2_multi/scene.json";
 			break;
 	}
 
