@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Web VR</title>
+
+</head>
+<body>
+
+	<div id="vrview"></div>
+
+	<script>
+		var url = new URL(window.location.href);
+
+		var jsonpath = url.searchParams.get("jasonpath");		
+	</script>
+
+	<script src="../vrview-master/build/vrview.js"></script>
+	<script src="loader.js"></script>
+
+</body>
+</html>
