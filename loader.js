@@ -16,7 +16,7 @@ function loadJSON(callback) {
     xmlhttp.send(null);  
  }
 
- function init() {
+function init() {
  loadJSON(function(response) {
   // Parse JSON string into object - funzione nativa
     actualJSON = JSON.parse(response);
@@ -75,11 +75,12 @@ function loadScene(id) {
   });
 
   // Add all the hotspots for the scene
-  var newScene = actualJSON.scenes[id]; //newScene e' l'oggetto scena con image e hotspots
+  // newScene e' l'oggetto scena con image e hotspots
+  var newScene = actualJSON.scenes[id];
   console.log("oggetto scena", newScene);
 
-  //Object.keys restituisce un array i cui elementi sono stringhe
-  //corrispondenti alle proprietà enumerabili dell'oggetto passato come parametro
+  // Object.keys restituisce un array i cui elementi sono stringhe
+  // corrispondenti alle proprietà enumerabili dell'oggetto passato come parametro
   // array con i nomi degli hotspots, corrispondono all'index della scena che caricano
   var sceneHotspots = Object.keys(newScene.hotspots);
   console.log(sceneHotspots);
