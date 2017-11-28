@@ -18,8 +18,7 @@ function loadJSON(callback) {
 
  function init() {
  loadJSON(function(response) {
-  // Parse JSON string into object
-  // funzione nativa
+  // Parse JSON string into object - funzione nativa
     actualJSON = JSON.parse(response);
 
     console.log(actualJSON);
@@ -45,7 +44,7 @@ function onLoad() {
 
 function onVRViewReady(e) {
   console.log('onVRViewReady');
-  loadScene(actualJSON.scenes[0].name);
+  loadScene(actualJSON.scenes[0].index);
 }
 
 function onModeChange(e) {
@@ -70,18 +69,18 @@ function loadScene(id) {
 
   // Set the image
   vrView.setContent({
-    image: actualJSON[id].image,
-    image: actualJSON.scenes,
+    image: actualJSON.scenes[id].image,
     is_stereo: true,
     is_autopan_off: true
   });
 
   // Add all the hotspots for the scene
-  var newScene = actualJSON[id]; //newScene e' l'oggetto scena con image e hotspots
+  var newScene = actualJSON.scenes[id]; //newScene e' l'oggetto scena con image e hotspots
   console.log("oggetto scena", newScene);
 
   //Object.keys restituisce un array i cui elementi sono stringhe
   //corrispondenti alle proprietà enumerabili dell'oggetto passato come parametro
+  // array con i nomi degli hotspots, corrispondono all'index della scena che caricano
   var sceneHotspots = Object.keys(newScene.hotspots);
   console.log(sceneHotspots);
   
@@ -91,7 +90,6 @@ function loadScene(id) {
     console.log(hotspotName);
 
     var hotspot = newScene.hotspots[hotspotName];
-    //console.log(hotspot);
 
     vrView.addHotspot(hotspotName, {
       pitch: hotspot.pitch,
