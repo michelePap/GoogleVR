@@ -50,8 +50,9 @@ function loadScene(id) {
   console.log('loadScene', id);
 
   // Set the image
+  // aggiunge il percorso relativo alla cartella del progetto
   vrView.setContent({
-    image: actualJSON.scenes[id].image,
+    image: "../" + folder + "/" + actualJSON.scenes[id].image,
     is_stereo: true,
     is_autopan_off: true
   });

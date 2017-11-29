@@ -19,7 +19,7 @@
 			$( "button" ).click(function( event ) {
 				var cartella = $( this ).val();
 				var jsonpath = "../" + cartella + "/scene.json";
-				window.location.assign("scene_selector.html?jasonpath=" + jsonpath);
+				window.location.assign("scene_selector.html?jasonpath=" + jsonpath + "&folder=" + cartella );
 				/* $( "#container" ).load( "scene_selector.html", "jsonpath", function() {
 					console.log("caricato cazzo!");
 				}); */
