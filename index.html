@@ -6,15 +6,11 @@
 </head>
 <body>
 
-	<div id="container">
+	<button type="button" value="olga_1">Olga</button>
 
-		<button type="button" value="olga_1">Olga</button>
+	<button type="button" value="olga_2_multi">Olga Multi</button>
 
-		<button type="button" value="olga_2_multi">Olga Multi</button>
-
-		<button type="button" value="ninni_2_multi">Ninni</button>
-
-	</div>
+	<button type="button" value="ninni_2_multi">Ninni</button>
 
 	<script src="../jquery.js"></script>
 	<script>
@@ -22,8 +18,7 @@
 
 			$( "button" ).click(function( event ) {
 				var cartella = $( this ).val();
-				var jsonpath = "../" + cartella + "/scene2.json";
-				//alert(jsonpath);
+				var jsonpath = "../" + cartella + "/scene.json";
 				window.location.assign("scene_selector.html?jasonpath=" + jsonpath);
 				/* $( "#container" ).load( "scene_selector.html", "jsonpath", function() {
 					console.log("caricato cazzo!");

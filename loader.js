@@ -1,29 +1,11 @@
 var vrView;
 var actualJSON;
-init();
 
-function loadJSON(callback) {   
-
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.overrideMimeType("application/json");
-    xmlhttp.open('GET', jsonpath, true); // false per caricamento sincrono (aspetto la risposta del server)
-    xmlhttp.onreadystatechange = function () {
-          if (xmlhttp.readyState == 4 && xmlhttp.status == "200") {
-            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-            callback(xmlhttp.responseText);
-          }
-    };
-    xmlhttp.send(null);  
- }
-
-function init() {
- loadJSON(function(response) {
-  // Parse JSON string into object - funzione nativa
-    actualJSON = JSON.parse(response);
-
-    console.log(actualJSON);
- });
-}
+$.getJSON( jsonpath, function( resp ) {
+ 
+    actualJSON = resp;
+    //console.log("JSON", actualJSON);
+});
 
 function onLoad() {
   vrView = new VRView.Player('#vrview', {
@@ -85,11 +67,8 @@ function loadScene(id) {
   var sceneHotspots = Object.keys(newScene.hotspots);
   console.log(sceneHotspots);
   
-  for (var i = 0; i < sceneHotspots.length; i++) {
-
-    var hotspotName = sceneHotspots[i];
-    console.log(hotspotName);
-
+  $.each( sceneHotspots, function( index, value ){
+    var hotspotName = value;
     var hotspot = newScene.hotspots[hotspotName];
 
     vrView.addHotspot(hotspotName, {
@@ -98,7 +77,7 @@ function loadScene(id) {
       radius: hotspot.radius,
       distance: hotspot.distance
     });
-  }
+  });
 }
 
 function onVRViewError(e) {
