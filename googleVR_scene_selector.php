@@ -30,7 +30,7 @@
 
   	<div id="vrview"></div>
     
-    <script src="../vrview-master/build/vrview.js"></script>
+    <script src="../vrview/build/vrview.js"></script>
     <script>var jsonpath = "<?php echo "$path"; ?>"</script>
     <script src="googleVR_loader.js"></script>
   	

@@ -9,8 +9,8 @@ $.getJSON( jsonpath, function( resp ) {
 
 function onLoad() {
   vrView = new VRView.Player('#vrview', {
-    image: '../vrview-master/examples/hotspots/blank.png',
-    preview: '../vrview-master/examples/hotspots/blank.png',
+    image: 'blank.png',
+    preview: 'blank.png',
     width: '100%',
     height: 700,
     is_stereo: true,
