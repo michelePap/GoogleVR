@@ -23,8 +23,8 @@
 
 			$( "button" ).click(function( event ) {
 				var cartella = $( this ).val();
-				var jsonpath = "/projects/" + cartella + "/scene.json";
-				window.location.assign("scene_selector.html?jasonpath=" + jsonpath + "&folder=" + cartella );
+				var jsonpath = "/GoogleVR/projects/" + cartella + "/scene.json";
+				window.location.assign("/GoogleVR/scene_selector.html?jasonpath=" + jsonpath + "&folder=" + cartella );
 			});
 
 		});
