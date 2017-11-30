@@ -13,13 +13,13 @@
 
 	<button type="button" value="ninni_2_multi">Ninni</button>
 
-	<script src="../jquery-min.js"></script>
+	<script src="/scripts/jquery-min.js"></script>
 	<script>
 		$( document ).ready(function() {
 
 			$( "button" ).click(function( event ) {
 				var cartella = $( this ).val();
-				var jsonpath = "../" + cartella + "/scene.json";
+				var jsonpath = "/projects/" + cartella + "/scene.json";
 				window.location.assign("scene_selector.html?jasonpath=" + jsonpath + "&folder=" + cartella );
 				/* $( "#container" ).load( "scene_selector.html", "jsonpath", function() {
 					console.log("caricato cazzo!");

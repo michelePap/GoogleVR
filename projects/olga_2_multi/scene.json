@@ -1,0 +1,30 @@
+{
+  "scenes": [
+    {
+      "index": 0,
+      "name": "scene1",
+      "image": "scene_01.jpg",
+      "hotspots": {
+        "1": {
+          "pitch": 0,
+          "yaw": -2,
+          "radius": 0.05,
+          "distance": 1
+        }
+      }
+    },
+    {
+      "index": 1,
+      "name": "scene2",
+      "image": "scene_02.jpg",
+      "hotspots": {
+        "0": {
+          "pitch": 0,
+          "yaw": -2,
+          "radius": 0.05,
+          "distance": 1
+        }
+      }
+    }
+  ]
+}

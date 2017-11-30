@@ -1,0 +1,10 @@
+{
+  "scenes": [
+    {
+      "index": 0,
+      "name": "scene1",
+      "image": "scene_01.jpg",
+      "hotspots": {}
+    }
+  ]
+}
