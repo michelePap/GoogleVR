@@ -20,22 +20,22 @@ button {
 	}
 
 	button {
-  	width: 70%;
-  	position: relative;
-    left: 15%;
-  }
+		width: 70%;
+		position: relative;
+		left: 15%;
+	}
 }
 
 /* DESKTOP */
 @media screen and (min-width: 700px) {
-  iframe {
-    height: 400px;
-    width: 700px;
-  }
+	iframe {
+		height: 700px;
+		width: 100%;
+	}
 
-  button {
-  	width: 30%;
-  	position: relative;
-    left: 35%;
-  }
+	button {
+		width: 30%;
+		position: relative;
+		left: 35%;
+	}
 }
