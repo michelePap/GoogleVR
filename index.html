@@ -12,7 +12,9 @@
 
 	<button type="button" class="button" value="olga_2_multi">Olga Multi</button><br>
 
-	<button type="button" class="button" value="ninni_2_multi">Ninni</button>
+	<button type="button" class="button" value="ninni_2_multi">Ninni</button><br>
+
+	<button type="button" class="button" value="qrcode">Scan QRcode</button>
 
 	<script src="/GoogleVR/scripts/jquery-min.js"></script>
 	<script>
@@ -20,8 +22,13 @@
 
 			$( "button" ).click(function( event ) {
 				var cartella = $( this ).val();
-				var jsonpath = "/GoogleVR/projects/" + cartella + "/scene.json";
-				window.location.assign("/GoogleVR/scene_selector.html?jasonpath=" + jsonpath + "&folder=" + cartella );
+				if(cartella == "qrcode") {
+					window.location.assign("/GoogleVR/qrcode_scanner.html");
+
+				} else {
+					var jsonpath = "/GoogleVR/projects/" + cartella + "/scene.json";
+					window.location.assign("/GoogleVR/scene_selector.html?jasonpath=" + jsonpath + "&folder=" + cartella );
+				}
 			});
 
 		});
