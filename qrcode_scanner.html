@@ -15,6 +15,11 @@
         <ul></ul>
         <script src="/GoogleVR/scripts/qrcodelib.js"></script>
         <script src="/GoogleVR/scripts/webcodecamjs.js"></script>
+        <script src="/GoogleVR/scripts/cardboard_decode/bytebuffer.js"></script>
+        <script src="/GoogleVR/scripts/cardboard_decode/protobuf.js"></script>
+        <script src="/GoogleVR/scripts/cardboard_decode/cardboard.js"></script>
+        <script src="/GoogleVR/scripts/cardboard_decode/index.js"></script>
+        
         <script>
             var txt = "innerText" in HTMLElement.prototype ? "innerText" : "textContent";
             var arg = {
@@ -22,6 +27,8 @@
                     var aChild = document.createElement('li');
                     aChild[txt] = result.format + ': ' + result.code;
                     document.querySelector('body').appendChild(aChild);
+                    var visore = changeVR(result.code);
+                    console.log("Parametri visore", visore);
                 }
             };
             var decoder = new WebCodeCamJS("canvas").buildSelectMenu('select', 'environment|back').init(arg).play();
