@@ -8,20 +8,23 @@
 </head>
 <body>
 
-	<button type="button" class="button" value="olga_1">Olga</button><br>
+	<button value="olga_1">Olga</button><br>
 
-	<button type="button" class="button" value="olga_2_multi">Olga Multi</button><br>
+	<button value="olga_2_multi">Olga Multi</button><br>
 
-	<button type="button" class="button" value="ninni_2_multi">Ninni</button><br>
+	<button value="ninni_2_multi">Ninni</button><br>
 
-	<button type="button" class="button" value="qrcode">QRcode Scanner</button>
-
+	<button value="qrcode">QRcode Scanner</button>
+	
 	<script src="/GoogleVR/scripts/jquery-min.js"></script>
 	<script>
 		$( document ).ready(function() {
 
-			$( "button" ).click(function( event ) {
-				var cartella = $( this ).val();
+			$("button").addClass("button");
+
+			$("button").click(function( event ) {
+				var cartella = $(this).val();
+
 				if(cartella == "qrcode") {
 					window.location.assign("/GoogleVR/qrcode_scanner.html");
 
