@@ -8,13 +8,18 @@
 </head>
 <body>
 
+	<button onclick="redirect()">Cambia visore</button><br>
 	<div id="vrview"></div>
 
 	<script>
 		var url = new URL(window.location.href);
 
 		var jsonpath = url.searchParams.get("jasonpath");	
-		var folder = url.searchParams.get("folder");	
+		var folder = url.searchParams.get("folder");
+
+		function redirect() {
+			window.location.replace("qrcode_scanner.html");
+		}	
 	</script>
 
 	<script src="/GoogleVR/scripts/vrview/build/vrview.min.js"></script>
