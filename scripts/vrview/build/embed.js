@@ -5012,8 +5012,6 @@ var Eye = {
   RIGHT: 'right'
 };
 
-var custom_viewer = localStorage.getItem("PARAM_VIEWER");
-
 /**
  * VRDisplay based on mobile device parameters and DeviceMotion APIs.
  */
@@ -5038,6 +5036,7 @@ function CardboardVRDisplay() {
   // Set the correct initial viewer.
   //this.deviceInfo_.setViewer(this.viewerSelector_.getCurrentViewer());
 
+  var custom_viewer = localStorage.getItem("PARAM_VIEWER");
   this.deviceInfo_.setViewer(custom_viewer);
 
   if (!window.WebVRConfig.ROTATE_INSTRUCTIONS_DISABLED) {
