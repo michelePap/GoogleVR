@@ -5012,6 +5012,8 @@ var Eye = {
   RIGHT: 'right'
 };
 
+var custom_viewer = localStorage.getItem("PARAM_VIEWER");
+
 /**
  * VRDisplay based on mobile device parameters and DeviceMotion APIs.
  */
@@ -9523,7 +9525,6 @@ var DEFAULT_VIEWER = 'CardboardV1';
 var VIEWER_KEY = 'WEBVR_CARDBOARD_VIEWER';
 var CLASS_NAME = 'webvr-polyfill-viewer-selector';
 
-var custom_viewer = localStorage.getItem("PARAM_VIEWER");
 //console.log(MIO_VIEWER);
 //var custom_viewer = JSON.parse(MIO_VIEWER);
 
