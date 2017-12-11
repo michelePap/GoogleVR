@@ -18,13 +18,13 @@
 		var jsonpath = url.searchParams.get("jasonpath");	
 		var folder = url.searchParams.get("folder");
 
+		var custom_viewer = localStorage.getItem("PARAM_VIEWER");
+		console.log(custom_viewer);
+
 		$("button").click(function(event) {
 			window.location.href = "qrcode_scanner.html";
 		});
-
-		function redirect() {
-			window.location.href = "qrcode_scanner.html";
-		}	
+	
 	</script>
 
 	<script src="/GoogleVR/scripts/vrview/build/vrview.min.js"></script>
