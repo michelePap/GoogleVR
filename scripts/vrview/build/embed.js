@@ -5037,7 +5037,7 @@ function CardboardVRDisplay() {
   //this.deviceInfo_.setViewer(this.viewerSelector_.getCurrentViewer());
 
   var custom_viewer = localStorage.getItem("PARAM_VIEWER");
-  this.deviceInfo_.setViewer(custom_viewer);
+  this.deviceInfo_.setViewer(eval(custom_viewer));
 
   if (!window.WebVRConfig.ROTATE_INSTRUCTIONS_DISABLED) {
     this.rotateInstructions_ = new RotateInstructions();
