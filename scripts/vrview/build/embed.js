@@ -5060,7 +5060,13 @@ function CardboardVRDisplay() {
   //this.deviceInfo_.setViewer(this.viewerSelector_.getCurrentViewer());
 
   var custom_viewer = localStorage.getItem("PARAM_VIEWER");
-  this.deviceInfo_.setViewer(eval(custom_viewer));
+
+  if(custom_viewer == null) {
+  	this.deviceInfo_.setViewer(this.viewerSelector_.getCurrentViewer());
+
+  } else {
+  	this.deviceInfo_.setViewer(eval(custom_viewer));
+  }
 
   if (!window.WebVRConfig.ROTATE_INSTRUCTIONS_DISABLED) {
     this.rotateInstructions_ = new RotateInstructions();
@@ -9546,9 +9552,6 @@ var Util = _dereq_('./util.js');
 var DEFAULT_VIEWER = 'CardboardV1';
 var VIEWER_KEY = 'WEBVR_CARDBOARD_VIEWER';
 var CLASS_NAME = 'webvr-polyfill-viewer-selector';
-
-//console.log(MIO_VIEWER);
-//var custom_viewer = JSON.parse(MIO_VIEWER);
 
 /**
  * Creates a viewer selector with the options specified. Supports being shown
