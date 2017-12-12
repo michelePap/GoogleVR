@@ -1,5 +1,4 @@
 function retrieveParams(parameter) {
-	console.log("retrieveParams");
 	var ProtoBuf = dcodeIO.ProtoBuf;
 	var  ByteBuffer = ProtoBuf.ByteBuffer,
 	Long = ProtoBuf.Long;                                // as well as Long.js (not used in this example)
