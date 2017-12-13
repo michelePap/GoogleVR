@@ -13,10 +13,10 @@
 
 	<script src="/GoogleVR/scripts/jquery-min.js"></script>
 	<script>
-		var url = new URL(window.location.href);
+		var params = (new URL(window.location.href)).searchParams;
 
-		var jsonpath = url.searchParams.get("jasonpath");	
-		var folder = url.searchParams.get("folder");
+		var jsonpath = params.get("jasonpath");	
+		var folder = params.get("folder");
 
 		var customviewer = localStorage.getItem("PARAM_VIEWER");
 		console.log(customviewer);

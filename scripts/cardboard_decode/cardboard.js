@@ -4,7 +4,7 @@ function retrieveParams(parameter) {
 	Long = ProtoBuf.Long;                                // as well as Long.js (not used in this example)
 	var builder = ProtoBuf.loadProtoFile("/GoogleVR/scripts/cardboard_decode/cardboard.proto"), JS = builder.build("cardboard");
 	var config = uriToParamsProto(parameter);	// Returns just the 'js' namespace if that's all we need
-	return JS.DeviceParams.decode64(config); 
+	return JS.DeviceParams.decode64(config);
 }
 
 function base64FromUrl(s) {
@@ -14,9 +14,25 @@ function base64FromUrl(s) {
 
 var PARAMS_URI_PREFIX = 'https://www.google.com/cardboard/cfg?p=';
 function uriToParamsProto(uri) {
-    if (uri.substring(0, PARAMS_URI_PREFIX.length) !== PARAMS_URI_PREFIX) {
-      return;
-    }
-    return base64FromUrl(uri.substring(PARAMS_URI_PREFIX.length));
-}
+	var urlShortener = "https://www.googleapis.com/urlshortener/v1/url?shortUrl=http://";
+	var key = "AIzaSyC4sZkpQ-kRib06NcGTFVwrFUZJzheP4XA";
+	var urlRequest = urlShortener + uri + "&key=" + key;
+	var array;
 
+	$.ajax({
+  		url: urlRequest,
+  		async: false,
+  		success: function(data) {
+  			var longUrl = data.longUrl;
+			var myregexp = new RegExp("\\?p=");
+			array = longUrl.split(myregexp);
+  		}
+	});
+
+	/*$.get(urlRequest, function(data) {
+		var longUrl = data.longUrl;
+		var myregexp = new RegExp("\\?p=");
+		array = longUrl.split(myregexp);
+	});*/
+	return array[1];
+}

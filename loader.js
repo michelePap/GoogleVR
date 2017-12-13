@@ -66,7 +66,6 @@ function loadScene(id) {
   // corrispondenti alle proprietà enumerabili dell'oggetto passato come parametro
   // array con i nomi degli hotspots, corrispondono all'index della scena che caricano
   var sceneHotspots = Object.keys(newScene.hotspots);
-  console.log(sceneHotspots);
   
   $.each( sceneHotspots, function( index, value ){
     var hotspotName = value;
