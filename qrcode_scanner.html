@@ -30,9 +30,9 @@
                     //var modello = viewer_custom.model;
                     //console.log("tipo", modello);
 
-                    var cardboard_custom2 = "CardboardV3: new CardboardViewer({id: 'CardboardV3',label: '" + viewer_custom.model + "',fov: " + viewer_custom.left_eye_field_of_view_angles[0] + ",interLensDistance: " + viewer_custom.inter_lens_distance + ",baselineLensDistance: " + viewer_custom.tray_to_lens_distance + ",screenLensDistance: " + viewer_custom.screen_to_lens_distance + ",distortionCoefficients: [" + viewer_custom.distortion_coefficients[0] + ", " + viewer_custom.distortion_coefficients[1] + "]})";
+                    var cardboard_custom = "CardboardV3: new CardboardViewer({id: 'CardboardV3',label: '" + viewer_custom.model + "',fov: " + viewer_custom.left_eye_field_of_view_angles[0] + ",interLensDistance: " + viewer_custom.inter_lens_distance + ",baselineLensDistance: " + viewer_custom.tray_to_lens_distance + ",screenLensDistance: " + viewer_custom.screen_to_lens_distance + ",distortionCoefficients: [" + viewer_custom.distortion_coefficients[0] + ", " + viewer_custom.distortion_coefficients[1] + "]})";
 
-                    var cardboard_custom = "CardboardV3: new CardboardViewer({id: 'CardboardV3',label: 'Cardboard Test',fov: 50,interLensDistance: 0.053,baselineLensDistance: 0.035,screenLensDistance: 0.042,distortionCoefficients: [0.34, 0.55]})";
+                    var cardboard_custom2 = "CardboardV3: new CardboardViewer({id: 'CardboardV3',label: 'Cardboard Test',fov: 50,interLensDistance: 0.053,baselineLensDistance: 0.035,screenLensDistance: 0.042,distortionCoefficients: [0.34, 0.55]})";
 
                     localStorage.setItem("PARAM_VIEWER", cardboard_custom);
                     console.log("Parametri visore", cardboard_custom);
