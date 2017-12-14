@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Scan QR Code</title>
+	<title>Cambia Visore</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <style>
@@ -14,6 +14,10 @@
 <body>
 
 	<script src="/GoogleVR/scripts/instascan.min.js"></script>
+	<script src="/GoogleVR/scripts/jquery-min.js"></script>
+	<script src="/GoogleVR/scripts/cardboard_decode/bytebuffer.js"></script>
+	<script src="/GoogleVR/scripts/cardboard_decode/protobuf.js"></script>
+	<script src="/GoogleVR/scripts/cardboard_decode/cardboard.js"></script>
 
 	<video id="preview"></video>
 	
@@ -21,6 +25,7 @@
 		let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 		scanner.addListener('scan', function (content) {
 			console.log(content);
+			createViewer(content);
 		});
 		Instascan.Camera.getCameras().then(function (cameras) {
 			console.log("CAM", cameras);
@@ -37,6 +42,21 @@
 		}).catch(function (e) {
 			console.error(e);
 		});
+
+		function createViewer(result) {
+			var viewer_custom = retrieveParams(result);
+
+			var interLensDistance = viewer_custom.inter_lens_distance.toFixed(3);
+			var baselineLensDistance = viewer_custom.tray_to_lens_distance.toFixed(3);
+			var screenLensDistance = viewer_custom.screen_to_lens_distance.toFixed(3);
+			var distortionCoefficients1 = viewer_custom.distortion_coefficients[0].toFixed(3);
+			var distortionCoefficients2 = viewer_custom.distortion_coefficients[1].toFixed(3);
+
+			var cardboard_custom = "CardboardV3: new CardboardViewer({id: 'CardboardV3',label: '" + viewer_custom.model + "',fov: " + viewer_custom.left_eye_field_of_view_angles[0] + ",interLensDistance: " + interLensDistance + ",baselineLensDistance: " + baselineLensDistance + ",screenLensDistance: " + screenLensDistance + ",distortionCoefficients: [" + distortionCoefficients1 + ", " + distortionCoefficients2 + "]})";
+
+			localStorage.setItem("PARAM_VIEWER", cardboard_custom);
+			console.log("OK");
+		}
 	</script>
 
 </body>
