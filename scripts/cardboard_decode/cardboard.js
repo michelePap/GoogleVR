@@ -12,12 +12,14 @@ function base64FromUrl(s) {
     return s.replace(/-/g, '+').replace(/_/g, '/');
 }
 
-var PARAMS_URI_PREFIX = 'https://www.google.com/cardboard/cfg?p=';
 function uriToParamsProto(uri) {
-	var urlShortener = "https://www.googleapis.com/urlshortener/v1/url?shortUrl=http://";
+	var myregexp = new RegExp("goo.gl/");
+	var array = uri.split(myregexp);
+	uri = array[1];
+	console.log("URI", uri);
+	var urlShortener = "https://www.googleapis.com/urlshortener/v1/url?shortUrl=http://goo.gl/";
 	var key = "AIzaSyC4sZkpQ-kRib06NcGTFVwrFUZJzheP4XA";
 	var urlRequest = urlShortener + uri + "&key=" + key;
-	var array;
 
 	$.ajax({
   		url: urlRequest,
@@ -28,11 +30,6 @@ function uriToParamsProto(uri) {
 			array = longUrl.split(myregexp);
   		}
 	});
-
-	/*$.get(urlRequest, function(data) {
-		var longUrl = data.longUrl;
-		var myregexp = new RegExp("\\?p=");
-		array = longUrl.split(myregexp);
-	});*/
+	console.log("ARRAY 1", array[1]);
 	return array[1];
 }
