@@ -8,6 +8,8 @@
     <body>
         <canvas></canvas>
         <hr>
+        <select></select>
+        <hr>
         <ul></ul>
         <script src="/GoogleVR/scripts/qrcodelib.js"></script>
         <script src="/GoogleVR/scripts/webcodecamjs.js"></script>
@@ -34,13 +36,14 @@
 
                     var cardboard_custom = "CardboardV3: new CardboardViewer({id: 'CardboardV3',label: '" + viewer_custom.model + "',fov: " + viewer_custom.left_eye_field_of_view_angles[0] + ",interLensDistance: " + interLensDistance + ",baselineLensDistance: " + baselineLensDistance + ",screenLensDistance: " + screenLensDistance + ",distortionCoefficients: [" + distortionCoefficients1 + ", " + distortionCoefficients2 + "]})";
 
-                    localStorage.setItem("PARAM_VIEWER", cardboard_custom);                    
+                    localStorage.setItem("PARAM_VIEWER", cardboard_custom);
+                    
                 }
             };
-            //var decoder = new WebCodeCamJS("canvas").buildSelectMenu('select', 'environment|back').init(arg).play();
-            //  Without visible select menu
+            var decoder = new WebCodeCamJS("canvas").buildSelectMenu('select', 'back').init(arg).play();
+            /*  Without visible select menu
                 var decoder = new WebCodeCamJS("canvas").buildSelectMenu(document.createElement('select'), 'environment|back').init(arg).play();
-            
+            */
             document.querySelector('select').addEventListener('change', function(){
                 decoder.stop().play();
             });
