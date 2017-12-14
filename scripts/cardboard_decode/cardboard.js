@@ -7,16 +7,11 @@ function retrieveParams(parameter) {
 	return JS.DeviceParams.decode64(config);
 }
 
-function base64FromUrl(s) {
-    s = s + '==='.slice(0, [0, 3, 2, 1][s.length % 4]);
-    return s.replace(/-/g, '+').replace(/_/g, '/');
-}
-
 function uriToParamsProto(uri) {
 	var myregexp = new RegExp("goo.gl/");
 	var array = uri.split(myregexp);
 	uri = array[1];
-	console.log("URI", uri);
+	
 	var urlShortener = "https://www.googleapis.com/urlshortener/v1/url?shortUrl=http://goo.gl/";
 	var key = "AIzaSyC4sZkpQ-kRib06NcGTFVwrFUZJzheP4XA";
 	var urlRequest = urlShortener + uri + "&key=" + key;
@@ -30,6 +25,6 @@ function uriToParamsProto(uri) {
 			array = longUrl.split(myregexp);
   		}
 	});
-	console.log("ARRAY 1", array[1]);
+	
 	return array[1];
 }

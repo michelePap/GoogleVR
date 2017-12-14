@@ -5057,7 +5057,6 @@ function CardboardVRDisplay() {
   this.viewerSelector_.onChange(this.onViewerChanged_.bind(this));
 
   // Set the correct initial viewer.
-  //this.deviceInfo_.setViewer(this.viewerSelector_.getCurrentViewer());
 
   var custom_viewer = localStorage.getItem("PARAM_VIEWER");
 
