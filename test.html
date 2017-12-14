@@ -22,10 +22,10 @@
 	<video id="preview"></video>
 	
 	<script>
-		let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+		let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: false });
 		scanner.addListener('scan', function (content) {
 			console.log(content);
-			createViewer(content);
+			saveViewer(content);
 		});
 		Instascan.Camera.getCameras().then(function (cameras) {
 			console.log("CAM", cameras);
@@ -43,7 +43,7 @@
 			console.error(e);
 		});
 
-		function createViewer(result) {
+		function saveViewer(result) {
 			var viewer_custom = retrieveParams(result);
 
 			var interLensDistance = viewer_custom.inter_lens_distance.toFixed(3);
