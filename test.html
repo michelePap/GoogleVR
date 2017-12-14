@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Scan QR Code</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+	<script src="/GoogleVR/scripts/instascan.min.js"></script>
+
+	<video id="preview"></video>
+	
+	<script>
+		let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), backgroundScan: false });
+		scanner.addListener('scan', function (content) {
+			console.log(content);
+		});
+		Instascan.Camera.getCameras().then(function (cameras) {
+			if (cameras.length > 0) {
+				scanner.start(cameras[0]);
+			} else {
+				console.error('No cameras found.');
+			}
+		}).catch(function (e) {
+			console.error(e);
+		});
+	</script>
+
+</body>
+</html>
