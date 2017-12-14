@@ -12,7 +12,7 @@
 	<video id="preview"></video>
 	
 	<script>
-		let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), backgroundScan: false });
+		let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 		scanner.addListener('scan', function (content) {
 			console.log(content);
 		});
@@ -26,7 +26,7 @@
 
 			} else {
 				console.error('No cameras found.');
-				
+
 			}
 		}).catch(function (e) {
 			console.error(e);
