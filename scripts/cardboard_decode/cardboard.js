@@ -7,14 +7,29 @@ function retrieveParams(parameter) {
 	return JS.DeviceParams.decode64(config);
 }
 
+function base64FromUrl(s) {
+    s = s + '==='.slice(0, [0, 3, 2, 1][s.length % 4]);
+    return s.replace(/-/g, '+').replace(/_/g, '/');
+}
+
+/**
+ * @param uri: goo.gl/7Bw74D or https://goo.gl/7Bw74D
+ */
 function uriToParamsProto(uri) {
 	var myregexp = new RegExp("goo.gl/");
 	var array = uri.split(myregexp);
-	uri = array[1];
+	uri = array[1]; // uri: 7Bw74D
+
+	var urlSolved = resolveUrl(uri);
 	
+	return base64FromUrl(urlSolved);
+}
+
+function resolveUrl(shorturl) {
 	var urlShortener = "https://www.googleapis.com/urlshortener/v1/url?shortUrl=http://goo.gl/";
 	var key = "AIzaSyC4sZkpQ-kRib06NcGTFVwrFUZJzheP4XA";
-	var urlRequest = urlShortener + uri + "&key=" + key;
+	var urlRequest = urlShortener + shorturl + "&key=" + key;
+	var arrayUrl;
 
 	$.ajax({
   		url: urlRequest,
@@ -22,9 +37,8 @@ function uriToParamsProto(uri) {
   		success: function(data) {
   			var longUrl = data.longUrl;
 			var myregexp = new RegExp("\\?p=");
-			array = longUrl.split(myregexp);
+			arrayUrl = longUrl.split(myregexp);
   		}
 	});
-	
-	return array[1];
+	return arrayUrl[1];
 }
