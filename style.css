@@ -24,6 +24,12 @@ button {
 		position: relative;
 		left: 15%;
 	}
+
+	.visore {
+		width: 100%;
+		position: static;
+		left: 0;
+	}
 }
 
 /* DESKTOP */
