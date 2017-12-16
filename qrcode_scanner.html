@@ -45,13 +45,17 @@
                 document.querySelector('body').appendChild(aChild);
                 decoder.stop();
                 storeViewer(result.code);
+            },
+
+            cameraSuccess: function(stream) {           //callback funtion to camera success
+                decoder.play();
             }
         };
         var decoder = new WebCodeCamJS("canvas").buildSelectMenu('select', 'environment|back').init(arg).play();
             /*  Without visible select menu
                 var decoder = new WebCodeCamJS("canvas").buildSelectMenu(document.createElement('select'), 'environment|back').init(arg).play();
                 */
-                document.querySelector('select').addEventListener('change', function(){
+        document.querySelector('select').addEventListener('change', function(){
                     decoder.stop().play();
                 });
     </script>
