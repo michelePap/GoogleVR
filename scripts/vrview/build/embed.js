@@ -5058,6 +5058,7 @@ function CardboardVRDisplay() {
 
   // Set the correct initial viewer.
 
+  // visore acquisito con scan qrcode
   var custom_viewer = eval(localStorage.getItem("PARAM_VIEWER"));
 
   if(custom_viewer == null) {
@@ -9633,6 +9634,7 @@ ViewerSelector.prototype.onSave_ = function() {
   // Attempt to save the viewer profile, but fails in private mode.
   try {
     localStorage.setItem(VIEWER_KEY, this.selectedKey);
+    localStorage.setItem("NAME_VIEWER", this.selectedKey);
   } catch(error) {
     console.error('Failed to save viewer profile: %s', error);
   }
