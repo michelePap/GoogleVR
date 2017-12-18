@@ -1,10 +1,10 @@
 var vrView;
-var actualJSON;
+var jsonScene;
+const projectsFolder = "/GoogleVR/projects/";
 
 $.getJSON( jsonpath, function( resp ) {
  
-    actualJSON = resp;
-    //console.log("JSON", actualJSON);
+    jsonScene = resp;
 });
 
 function onLoad() {
@@ -26,7 +26,7 @@ function onLoad() {
 
 function onVRViewReady(e) {
   console.log('onVRViewReady');
-  loadScene(actualJSON.scenes[0].index);
+  loadScene(jsonScene.scenes[0].index);
 }
 
 function onModeChange(e) {
@@ -52,14 +52,14 @@ function loadScene(id) {
   // Set the image
   // aggiunge il percorso relativo alla cartella del progetto
   vrView.setContent({
-    image: "/GoogleVR/projects/" + folder + "/" + actualJSON.scenes[id].image,
+    image: projectsFolder + folder + "/" + jsonScene.scenes[id].image,
     is_stereo: true,
     is_autopan_off: true
   });
 
   // Add all the hotspots for the scene
   // newScene e' l'oggetto scena con image e hotspots
-  var newScene = actualJSON.scenes[id];
+  var newScene = jsonScene.scenes[id];
   console.log("oggetto scena", newScene);
 
   // Object.keys restituisce un array i cui elementi sono stringhe

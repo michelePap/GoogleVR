@@ -23,9 +23,7 @@
 
     <script>
 
-        function storeViewer(result) {
-            var viewer = retrieveParams(result);
-
+        function storeViewer(viewer) {
             var interLensDistance = viewer.inter_lens_distance.toFixed(3);
             var baselineLensDistance = viewer.tray_to_lens_distance.toFixed(3);
             var screenLensDistance = viewer.screen_to_lens_distance.toFixed(3);
@@ -41,13 +39,14 @@
         var arg = {
             resultFunction: function(result) {
                 var aChild = document.createElement('li');
-                aChild[txt] = result.format + ': ' + result.code;
+                aChild[txt] = "Visore acquisito: " + result.format + ': ' + result.code;
                 document.querySelector('body').appendChild(aChild);
                 decoder.stop();
-                storeViewer(result.code);
+                var viewer = retrieveParams(result.code);
+                storeViewer(viewer);
             },
 
-            cameraSuccess: function(stream) {           //callback funtion to camera success
+            cameraSuccess: function(stream) {
                 decoder.play();
             }
         };
