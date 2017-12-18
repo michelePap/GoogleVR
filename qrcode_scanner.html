@@ -23,13 +23,8 @@
     <script src="/GoogleVR/scripts/cardboard_decode/cardboard.js"></script>
 
     <script>
-        var viewerName = localStorage.getItem("WEBVR_CARDBOARD_VIEWER");
-            if(viewerName == null) {
-                $("p").append("Cardboard I/O 2014");
-
-            } else {
-                $("p").append(viewerName);
-            }
+        var viewerName = localStorage.getItem("NAME_VIEWER");
+        $("p").append(viewerName);
 
         function storeViewer(viewer) {
             var interLensDistance = viewer.inter_lens_distance.toFixed(3);

@@ -5058,13 +5058,17 @@ function CardboardVRDisplay() {
 
   // Set the correct initial viewer.
 
-  var custom_viewer = localStorage.getItem("PARAM_VIEWER");
+  var custom_viewer = eval(localStorage.getItem("PARAM_VIEWER"));
 
   if(custom_viewer == null) {
-  	this.deviceInfo_.setViewer(this.viewerSelector_.getCurrentViewer());
+
+  	var current_viewer = this.viewerSelector_.getCurrentViewer();
+  	this.deviceInfo_.setViewer(current_viewer);
+  	localStorage.setItem("NAME_VIEWER", current_viewer.label);
 
   } else {
-  	this.deviceInfo_.setViewer(eval(custom_viewer));
+  	this.deviceInfo_.setViewer(custom_viewer);
+  	localStorage.setItem("NAME_VIEWER", custom_viewer.label);
   }
 
   if (!window.WebVRConfig.ROTATE_INSTRUCTIONS_DISABLED) {
