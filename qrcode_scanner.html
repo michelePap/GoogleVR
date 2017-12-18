@@ -24,7 +24,18 @@
 
     <script>
         var viewerName = localStorage.getItem("NAME_VIEWER");
-        $("p").append(viewerName);
+        if(viewerName == null) {
+            $("p").append("Cardboard I/O 2014");
+
+        } else if (viewerName == "CardboardV1") {
+            $("p").append("Cardboard I/O 2014");
+
+        } else if (viewerName == "CardboardV2") {
+            $("p").append("Cardboard I/O 2015");
+
+        } else {
+            $("p").append(viewerName);
+        }
 
         function storeViewer(viewer) {
             var interLensDistance = viewer.inter_lens_distance.toFixed(3);
