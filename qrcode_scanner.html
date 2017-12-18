@@ -11,6 +11,7 @@
     }
 </style>
 <body>
+    <p>Visore attuale: </p>
     <canvas></canvas><br>
     <select></select><br>
     <ul></ul>
@@ -22,6 +23,16 @@
     <script src="/GoogleVR/scripts/cardboard_decode/cardboard.js"></script>
 
     <script>
+        $(document).ready(function() {
+
+            var viewerName = localStorage.getItem("WEBVR_CARDBOARD_VIEWER");
+            if(viewerName == null) {
+                $("p").append("Cardboard I/O 2014");
+
+            } else {
+                $("p").append(viewerName);
+            }
+        }
 
         function storeViewer(viewer) {
             var interLensDistance = viewer.inter_lens_distance.toFixed(3);
@@ -33,6 +44,7 @@
             var cardboard_custom = "CardboardV3: new CardboardViewer({id: 'CardboardV3',label: '" + viewer.model + "',fov: " + viewer.left_eye_field_of_view_angles[0] + ",interLensDistance: " + interLensDistance + ",baselineLensDistance: " + baselineLensDistance + ",screenLensDistance: " + screenLensDistance + ",distortionCoefficients: [" + distortionCoefficients1 + ", " + distortionCoefficients2 + "]})";
 
             localStorage.setItem("PARAM_VIEWER", cardboard_custom);
+            localStorage.setItem("NAME_VIEWER", viewer.model);
         }
 
         var txt = "innerText" in HTMLElement.prototype ? "innerText" : "textContent";
