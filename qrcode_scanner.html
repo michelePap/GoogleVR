@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <style>
+    /* MOBILE */
+    @media screen and (max-width: 700px) {
+        canvas {
+            width: 100%;
+        }
+    }
     canvas {
         border:1px solid #000000;
     }
@@ -54,7 +60,7 @@
         var arg = {
             resultFunction: function(result) {
                 var aChild = document.createElement('li');
-                aChild[txt] = "Visore acquisito: " + result.format + ': ' + result.code;
+                aChild[txt] = "Visore acquisito " + result.format + ': ' + result.code;
                 document.querySelector('body').appendChild(aChild);
                 decoder.stop();
                 var viewer = retrieveParams(result.code);
