@@ -5061,13 +5061,13 @@ function CardboardVRDisplay() {
   // visore acquisito con scan qrcode
   var custom_viewer = eval(localStorage.getItem("PARAM_VIEWER"));
 
-  if(custom_viewer == null) {
+  if(custom_viewer == null) { // imposta il visore di default
 
   	var current_viewer = this.viewerSelector_.getCurrentViewer();
   	this.deviceInfo_.setViewer(current_viewer);
   	localStorage.setItem("NAME_VIEWER", current_viewer.label);
 
-  } else {
+  } else { // imposta il visore del qrcode
   	this.deviceInfo_.setViewer(custom_viewer);
   	localStorage.setItem("NAME_VIEWER", custom_viewer.label);
   }
