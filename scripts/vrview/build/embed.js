@@ -11990,6 +11990,8 @@ WorldRenderer.prototype.init_ = function(hideFullscreenButton) {
   this.scene = this.createScene_();
   this.scene.add(this.camera.parent);
 
+  this.addImage('../../projects/catalogo/photo/2.jpg', 0, 0, 0.45, 0.45, 0.8);
+  this.addImage('../../projects/catalogo/photo/3.jpg', 12, -25, 0.20, 0.20, 0.8);
 
   // Watch the resize event.
   window.addEventListener('resize', this.onResize_.bind(this));
@@ -12063,6 +12065,28 @@ WorldRenderer.prototype.onContextMenu_ = function(e) {
   e.preventDefault();
   e.stopPropagation();
   return false;
+};
+
+WorldRenderer.prototype.addImage = function ( src, pitch, yaw, width, height, distance ) {
+  var self = this;
+  var texture = new THREE.TextureLoader();
+  //loader.crossOrigin = 'anonymous';
+  texture.load( src, function ( texture ) {
+
+    var imageObject = new THREE.Mesh(
+      new THREE.PlaneGeometry( width, height ),
+      new THREE.MeshBasicMaterial({ map: texture }),
+    );
+
+    var quat = new THREE.Quaternion();
+    quat.setFromEuler(new THREE.Euler(THREE.Math.degToRad(pitch), THREE.Math.degToRad(yaw), 0));
+
+    imageObject.position.z = -distance;
+    imageObject.position.applyQuaternion(quat);
+    imageObject.lookAt(new THREE.Vector3());
+
+    self.scene.add( imageObject );
+  });
 };
 
 module.exports = WorldRenderer;

@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+	<title>Web VR</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+	<button class="visore">Cambia visore</button><br><br>
+	<div id="vrview"></div>
+
+	<script src="/GoogleVR/scripts/jquery-min.js"></script>
+	<script>
+		
+
+		$("button").click(function(event) {
+			window.location.href = "qrcode_scanner.html";
+		});
+	
+	</script>
+
+	<script src="/GoogleVR/scripts/vrview/build/vrview.js"></script>
+	<script src="/GoogleVR/loader_catalogo.js"></script>
+
+</body>
+</html>

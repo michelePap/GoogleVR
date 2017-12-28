@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Web VR</title>
-	<meta charset="utf-8">
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="style.css">
 </head>
@@ -14,7 +14,9 @@
 
 	<button value="ninni_2_multi">Ninni</button><br>
 
-	<button value="qrcode">Cambia visore</button>
+	<button value="qrcode">Cambia visore</button><br>
+
+	<button value="catalogo">Catalogo</button>
 	
 	<script src="/GoogleVR/scripts/jquery-min.js"></script>
 	<script>
@@ -27,6 +29,9 @@
 
 				if(cartella == "qrcode") {
 					window.location.assign("/GoogleVR/qrcode_scanner.html");
+
+				} else if (cartella == "catalogo") {
+					window.location.assign("/GoogleVR/catalogo.html");
 
 				} else {
 					var jsonpath = "/GoogleVR/projects/" + cartella + "/scene.json";
