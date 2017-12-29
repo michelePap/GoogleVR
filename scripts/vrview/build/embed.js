@@ -10745,6 +10745,7 @@ IFrameMessageReceiver.prototype.onMessage_ = function(event) {
     case Message.SET_VOLUME:
     case Message.MUTED:
     case Message.ADD_HOTSPOT:
+    case Message.ADD_IMAGE:
     case Message.PLAY:
     case Message.PAUSE:
     case Message.SET_CURRENT_TIME:
@@ -10854,6 +10855,7 @@ var receiver = new IFrameMessageReceiver();
 receiver.on(Message.PLAY, onPlayRequest);
 receiver.on(Message.PAUSE, onPauseRequest);
 receiver.on(Message.ADD_HOTSPOT, onAddHotspot);
+receiver.on(Message.ADD_IMAGE, onAddImage);
 receiver.on(Message.SET_CONTENT, onSetContent);
 receiver.on(Message.SET_VOLUME, onSetVolume);
 receiver.on(Message.MUTED, onMuted);
@@ -10985,6 +10987,22 @@ function onAddHotspot(e) {
   var distance = parseFloat(e.distance);
   var id = e.id;
   worldRenderer.hotspotRenderer.add(pitch, yaw, radius, distance, id);
+}
+
+function onAddImage(e) {
+	if (Util.isDebug()) {
+		console.log('onAddImage', e);
+	}
+
+	var src = e.src;
+    var pitch = e.pitch;
+    var yaw = e.yaw;
+    var width = e.width;
+    var height = e.height;
+    var distance = e.distance;
+    var id = e.imageId;
+    // TO DO: gestire l'id
+    worldRenderer.addImage(src, pitch, yaw, width, height, distance);
 }
 
 function onSetContent(e) {
@@ -11990,9 +12008,6 @@ WorldRenderer.prototype.init_ = function(hideFullscreenButton) {
   this.scene = this.createScene_();
   this.scene.add(this.camera.parent);
 
-  this.addImage('../../projects/catalogo/photo/2.jpg', 0, 0, 0.45, 0.45, 0.8);
-  this.addImage('../../projects/catalogo/photo/3.jpg', 12, -25, 0.20, 0.20, 0.8);
-
   // Watch the resize event.
   window.addEventListener('resize', this.onResize_.bind(this));
 
@@ -12115,6 +12130,7 @@ var Message = {
   PAUSE: 'pause',
   TIMEUPDATE: 'timeupdate',
   ADD_HOTSPOT: 'addhotspot',
+  ADD_IMAGE: 'addimage',
   SET_CONTENT: 'setimage',
   SET_VOLUME: 'setvolume',
   MUTED: 'muted',

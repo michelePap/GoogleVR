@@ -80,6 +80,51 @@ function loadScene(id) {
       distance: hotspot.distance
     });
   });
+
+  vrView.addImage("1", {
+    src: "../../projects/catalogo/photo/1.jpg",
+    pitch: 0,
+    yaw: 28,
+    width: 0.35,
+    height: 0.35,
+    distance: 0.8,
+  });
+
+  vrView.addImage("2", {
+    src: "../../projects/catalogo/photo/2.jpg",
+    pitch: 0,
+    yaw: 0,
+    width: 0.45,
+    height: 0.45,
+    distance: 0.8,
+  });
+
+  vrView.addImage("3", {
+    src: "../../projects/catalogo/photo/3.jpg",
+    pitch: 12,
+    yaw: -25,
+    width: 0.15,
+    height: 0.15,
+    distance: 0.8,
+  });
+
+  vrView.addImage("4", {
+    src: "../../projects/catalogo/photo/4.jpg",
+    pitch: 0,
+    yaw: -25,
+    width: 0.15,
+    height: 0.15,
+    distance: 0.8,
+  });
+
+  vrView.addImage("5", {
+    src: "../../projects/catalogo/photo/5.jpg",
+    pitch: -12,
+    yaw: -25,
+    width: 0.15,
+    height: 0.15,
+    distance: 0.8,
+  });
 }
 
 function onVRViewError(e) {

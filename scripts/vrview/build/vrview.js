@@ -484,6 +484,20 @@ Player.prototype.addHotspot = function(hotspotId, params) {
   this.sender.send({type: Message.ADD_HOTSPOT, data: data});
 };
 
+Player.prototype.addImage = function(imageId, params) {
+
+  var data = {
+    src: params.src,
+    pitch: params.pitch,
+    yaw: params.yaw,
+    width: params.width,
+    height: params.height,
+    distance: params.distance,
+    id: imageId
+  };
+  this.sender.send({type: Message.ADD_IMAGE, data: data});
+};
+
 Player.prototype.play = function() {
   this.sender.send({type: Message.PLAY});
 };
@@ -737,6 +751,7 @@ var Message = {
   PAUSE: 'pause',
   TIMEUPDATE: 'timeupdate',
   ADD_HOTSPOT: 'addhotspot',
+  ADD_IMAGE: 'addimage',
   SET_CONTENT: 'setimage',
   SET_VOLUME: 'setvolume',
   MUTED: 'muted',
