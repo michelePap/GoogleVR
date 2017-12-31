@@ -4,7 +4,21 @@
       "index": 0,
       "name": "scene1",
       "image": "equirectangular.jpg",
-      "hotspots": {}
+      "hotspots": {
+      	"next": {
+          "pitch": -21,
+          "yaw": -115,
+          "radius": 0.05,
+          "distance": 1
+        },
+
+        "prev": {
+          "pitch": -21,
+          "yaw": -63,
+          "radius": 0.05,
+          "distance": 1
+        }
+      }
     }
   ]
 }

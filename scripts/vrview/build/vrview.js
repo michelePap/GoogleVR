@@ -498,6 +498,11 @@ Player.prototype.addImage = function(imageId, params) {
   this.sender.send({type: Message.ADD_IMAGE, data: data});
 };
 
+Player.prototype.removeImage = function(imageId) {
+  var data = {id: imageId};
+  this.sender.send({type: Message.REMOVE_IMAGE, data: data});
+}
+
 Player.prototype.play = function() {
   this.sender.send({type: Message.PLAY});
 };
@@ -752,6 +757,7 @@ var Message = {
   TIMEUPDATE: 'timeupdate',
   ADD_HOTSPOT: 'addhotspot',
   ADD_IMAGE: 'addimage',
+  REMOVE_IMAGE: 'removeimage',
   SET_CONTENT: 'setimage',
   SET_VOLUME: 'setvolume',
   MUTED: 'muted',

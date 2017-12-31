@@ -10746,6 +10746,7 @@ IFrameMessageReceiver.prototype.onMessage_ = function(event) {
     case Message.MUTED:
     case Message.ADD_HOTSPOT:
     case Message.ADD_IMAGE:
+    case Message.REMOVE_IMAGE:
     case Message.PLAY:
     case Message.PAUSE:
     case Message.SET_CURRENT_TIME:
@@ -10856,6 +10857,7 @@ receiver.on(Message.PLAY, onPlayRequest);
 receiver.on(Message.PAUSE, onPauseRequest);
 receiver.on(Message.ADD_HOTSPOT, onAddHotspot);
 receiver.on(Message.ADD_IMAGE, onAddImage);
+receiver.on(Message.REMOVE_IMAGE, onRemoveImage);
 receiver.on(Message.SET_CONTENT, onSetContent);
 receiver.on(Message.SET_VOLUME, onSetVolume);
 receiver.on(Message.MUTED, onMuted);
@@ -11000,9 +11002,18 @@ function onAddImage(e) {
     var width = e.width;
     var height = e.height;
     var distance = e.distance;
-    var id = e.imageId;
-    // TO DO: gestire l'id
-    worldRenderer.addImage(src, pitch, yaw, width, height, distance);
+    var id = e.id;
+    
+    worldRenderer.addImage(id, src, pitch, yaw, width, height, distance);
+}
+
+function onRemoveImage(e) {
+	if (Util.isDebug()) {
+		console.log('onRemoveImage', e);
+	}
+
+	var id = e.id;
+	worldRenderer.removeImage(id);
 }
 
 function onSetContent(e) {
@@ -12082,10 +12093,10 @@ WorldRenderer.prototype.onContextMenu_ = function(e) {
   return false;
 };
 
-WorldRenderer.prototype.addImage = function ( src, pitch, yaw, width, height, distance ) {
+WorldRenderer.prototype.addImage = function (id, src, pitch, yaw, width, height, distance ) {
   var self = this;
   var texture = new THREE.TextureLoader();
-  //loader.crossOrigin = 'anonymous';
+  loader.crossOrigin = 'anonymous';
   texture.load( src, function ( texture ) {
 
     var imageObject = new THREE.Mesh(
@@ -12094,15 +12105,22 @@ WorldRenderer.prototype.addImage = function ( src, pitch, yaw, width, height, di
     );
 
     var quat = new THREE.Quaternion();
-    quat.setFromEuler(new THREE.Euler(THREE.Math.degToRad(pitch), THREE.Math.degToRad(yaw), 0));
+    quat.setFromEuler(new THREE.Euler(THREE.Math.degToRad(pitch), THREE.Math.degToRad(yaw), 0, 'ZYX'));
 
     imageObject.position.z = -distance;
     imageObject.position.applyQuaternion(quat);
     imageObject.lookAt(new THREE.Vector3());
+    imageObject.name = id;
 
     self.scene.add( imageObject );
   });
 };
+
+WorldRenderer.prototype.removeImage = function (id) {
+	var self = this;
+	var imagetoremove = this.scene.getObjectByName(id);
+	self.scene.remove(imagetoremove);
+}
 
 module.exports = WorldRenderer;
 
@@ -12131,6 +12149,7 @@ var Message = {
   TIMEUPDATE: 'timeupdate',
   ADD_HOTSPOT: 'addhotspot',
   ADD_IMAGE: 'addimage',
+  REMOVE_IMAGE: 'removeimage',
   SET_CONTENT: 'setimage',
   SET_VOLUME: 'setvolume',
   MUTED: 'muted',

@@ -43,7 +43,12 @@ function onGetPosition(e) {
 function onHotspotClick(e) {
   vrView.getPosition()
   console.log('onHotspotClick', e.id);
-  if (e.id) {
+  if (e.id == "next") {
+    vrView.removeImage("5");
+
+  } else if (e.id == "prev") {
+
+  } else if (e.id) {
     loadScene(e.id);
   }
 }
@@ -84,7 +89,7 @@ function loadScene(id) {
   vrView.addImage("1", {
     src: "../../projects/catalogo/photo/1.jpg",
     pitch: 0,
-    yaw: 28,
+    yaw: 32,
     width: 0.35,
     height: 0.35,
     distance: 0.8,
