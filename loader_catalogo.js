@@ -1,12 +1,36 @@
 var vrView;
 var jsonScene;
-const projectsFolder = "/GoogleVR/projects/catalogo/home/";
-var jsonpath = projectsFolder + "scene.json"
+var jsonPhoto;
+// array con path foto
+var photoList;
+// parametri dei 5 frame
+var frame;
+// id dei 4 frame in cui caricare le foto
+var sceneFrame;
+// indice di photoList dal quale
+// iniziare a caricare le foto
+var photoIndex = 1;
+// indica il primo caricamento
+var firstLoad = true;
+const projectsFolder = "/GoogleVR/projects/catalogo";
+var jsonpathHome = projectsFolder + "/home.json";
+var jsonpathPhoto = projectsFolder + "/photo.json";
 
-$.getJSON( jsonpath, function( resp ) {
- 
-    jsonScene = resp;
+$.getJSON( jsonpathHome, function( resp ) {
+  jsonScene = resp;
+  frame = jsonScene.scenes[0].image_frame;
+  sceneFrame = Object.keys(frame);
+    sceneFrame.shift(); // rimuovo il primo frame/left
+  });
+
+$.getJSON( jsonpathPhoto, function( resp ) {
+  jsonPhoto = resp;
+  setPhotoCategory(0);
 });
+
+function setPhotoCategory(category) {
+  photoList = jsonPhoto.photo[category].images;
+}
 
 // is_stereo false - immagine convertita
 function onLoad() {
@@ -44,13 +68,71 @@ function onHotspotClick(e) {
   vrView.getPosition()
   console.log('onHotspotClick', e.id);
   if (e.id == "next") {
-    vrView.removeImage("5");
+    nextImage();
 
   } else if (e.id == "prev") {
+    prevImage();
 
   } else if (e.id) {
     loadScene(e.id);
   }
+}
+
+// visualizza foto successiva
+function nextImage() {
+  photoIndex++;
+  addAllImage();
+}
+
+// visualizza foto precedente
+function prevImage() {
+  // se ci sono foto precedenti
+  if(photoIndex > 1) {
+    photoIndex--;
+    addAllImage();
+  } else {
+    console.log("No photo to display");
+  }
+}
+
+// carica le foto nei frame
+function addAllImage() {
+  var tempIndex = photoIndex;
+  // se l'ultima foto e' stata caricata o e' il primo caricamento
+  if((tempIndex + sceneFrame.length) <= photoList.length || firstLoad) {
+    $.each(sceneFrame, function( index, value) {
+      // se ci sono foto da caricare
+      if(tempIndex < photoList.length) {
+        vrView.addImage(value, {
+          src: projectsFolder + photoList[tempIndex].value,
+          pitch: frame[value].pitch,
+          yaw: frame[value].yaw,
+          width: frame[value].width,
+          height: frame[value].height,
+          distance: frame[value].distance
+        });
+        tempIndex++;
+      } else {
+        return false;
+      }
+    });
+
+    if(!firstLoad) {
+      console.log("Remove all photos");
+      removeAllImage();
+    }
+    firstLoad = false;
+
+  } else {
+    console.log("No photo to display");
+    photoIndex--;
+  }
+}
+
+function removeAllImage() {
+  $.each(sceneFrame, function( index, value) {
+    vrView.removeImage(value);
+  });
 }
 
 function loadScene(id) {
@@ -64,72 +146,32 @@ function loadScene(id) {
     is_autopan_off: true
   });
 
-  // Add all the hotspots for the scene
-  // newScene e' l'oggetto scena con image e hotspots
-  var newScene = jsonScene.scenes[id];
-  console.log("oggetto scena", newScene);
+  // Tutti gli hotspot della scena
+  var hotspots = jsonScene.scenes[id].hotspots;
 
-  // Object.keys restituisce un array i cui elementi sono stringhe
-  // corrispondenti alle proprietà enumerabili dell'oggetto passato come parametro.
   // array con i nomi degli hotspots, corrispondono all'index della scena che caricano
-  var sceneHotspots = Object.keys(newScene.hotspots);
-  
-  $.each( sceneHotspots, function( index, value ){
-    var hotspotName = value;
-    var hotspot = newScene.hotspots[hotspotName];
+  var sceneHotspots = Object.keys(hotspots);
+  $.each(sceneHotspots, function( index, value ) {
 
-    vrView.addHotspot(hotspotName, {
-      pitch: hotspot.pitch,
-      yaw: hotspot.yaw,
-      radius: hotspot.radius,
-      distance: hotspot.distance
+    vrView.addHotspot(value, {
+      pitch: hotspots[value].pitch,
+      yaw: hotspots[value].yaw,
+      radius: hotspots[value].radius,
+      distance: hotspots[value].distance
     });
   });
 
-  vrView.addImage("1", {
-    src: "../../projects/catalogo/photo/1.jpg",
-    pitch: 0,
-    yaw: 32,
-    width: 0.35,
-    height: 0.35,
-    distance: 0.8,
+  // imposto foto del primo fisso che rimane fissa
+  vrView.addImage("left", {
+    // GoogleVR/projects/catalogo + /photo/1.jpg
+    src: projectsFolder + photoList[0].value,
+    pitch: frame["left"].pitch,
+    yaw: frame["left"].yaw,
+    width: frame["left"].width,
+    height: frame["left"].height,
+    distance: frame["left"].distance
   });
-
-  vrView.addImage("2", {
-    src: "../../projects/catalogo/photo/2.jpg",
-    pitch: 0,
-    yaw: 0,
-    width: 0.45,
-    height: 0.45,
-    distance: 0.8,
-  });
-
-  vrView.addImage("3", {
-    src: "../../projects/catalogo/photo/3.jpg",
-    pitch: 12,
-    yaw: -25,
-    width: 0.15,
-    height: 0.15,
-    distance: 0.8,
-  });
-
-  vrView.addImage("4", {
-    src: "../../projects/catalogo/photo/4.jpg",
-    pitch: 0,
-    yaw: -25,
-    width: 0.15,
-    height: 0.15,
-    distance: 0.8,
-  });
-
-  vrView.addImage("5", {
-    src: "../../projects/catalogo/photo/5.jpg",
-    pitch: -12,
-    yaw: -25,
-    width: 0.15,
-    height: 0.15,
-    distance: 0.8,
-  });
+  addAllImage();
 }
 
 function onVRViewError(e) {

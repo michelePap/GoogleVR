@@ -3,8 +3,8 @@ var jsonScene;
 const projectsFolder = "/GoogleVR/projects/";
 
 $.getJSON( jsonpath, function( resp ) {
- 
-    jsonScene = resp;
+
+  jsonScene = resp;
 });
 
 function onLoad() {
@@ -57,25 +57,18 @@ function loadScene(id) {
     is_autopan_off: true
   });
 
-  // Add all the hotspots for the scene
-  // newScene e' l'oggetto scena con image e hotspots
-  var newScene = jsonScene.scenes[id];
-  console.log("oggetto scena", newScene);
+  // Tutti gli hotspot della scena
+  var hotspots = jsonScene.scenes[id].hotspots;
 
-  // Object.keys restituisce un array i cui elementi sono stringhe
-  // corrispondenti alle proprietà enumerabili dell'oggetto passato come parametro
   // array con i nomi degli hotspots, corrispondono all'index della scena che caricano
-  var sceneHotspots = Object.keys(newScene.hotspots);
-  
-  $.each( sceneHotspots, function( index, value ){
-    var hotspotName = value;
-    var hotspot = newScene.hotspots[hotspotName];
+  var sceneHotspots = Object.keys(hotspots);
+  $.each(sceneHotspots, function( index, value ) {
 
-    vrView.addHotspot(hotspotName, {
-      pitch: hotspot.pitch,
-      yaw: hotspot.yaw,
-      radius: hotspot.radius,
-      distance: hotspot.distance
+    vrView.addHotspot(value, {
+      pitch: hotspots[value].pitch,
+      yaw: hotspots[value].yaw,
+      radius: hotspots[value].radius,
+      distance: hotspots[value].distance
     });
   });
 }

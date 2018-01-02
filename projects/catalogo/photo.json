@@ -1,0 +1,176 @@
+{
+  "photo": [
+    {
+      "category": "Industria",
+      "images": [
+        {
+          "name": "p_thumb1",
+          "value": "/photo/1.jpg"
+        },
+        {
+          "name": "p_thumb2",
+          "value": "/photo/2.jpg"
+        },
+        {
+          "name": "p_thumb3",
+          "value": "/photo/3.jpg"
+        },
+        {
+          "name": "p_thumb4",
+          "value": "/photo/4.jpg"
+        },
+        {
+          "name": "p_thumb5",
+          "value": "/photo/5.jpg"
+        },
+        {
+          "name": "p_thumb6",
+          "value": "/photo/6.jpg"
+        },
+        {
+          "name": "p_thumb7",
+          "value": "/photo/7.jpg"
+        },
+        {
+          "name": "p_thumb8",
+          "value": "/photo/8.jpg"
+        },
+        {
+          "name": "p_thumb9",
+          "value": "/photo/9.jpg"
+        },
+        {
+          "name": "p_thumb10",
+          "value": "/photo/10.jpg"
+        },
+        {
+          "name": "p_thumb11",
+          "value": "/photo/11.jpg"
+        },
+        {
+          "name": "p_thumb12",
+          "value": "/photo/12.jpg"
+        },
+        {
+          "name": "p_thumb13",
+          "value": "/photo/13.jpg"
+        },
+        {
+          "name": "p_thumb14",
+          "value": "/photo/14.jpg"
+        },
+        {
+          "name": "p_thumb16",
+          "value": "/photo/16.jpg"
+        }
+      ]
+    },
+    {
+      "category": "Lean",
+      "images": [
+        {
+          "name": "p_thumb1",
+          "value": "/photo/17.jpg"
+        },
+        {
+          "name": "p_thumb2",
+          "value": "/photo/18.jpg"
+        },
+        {
+          "name": "p_thumb3",
+          "value": "/photo/19.jpg"
+        },
+        {
+          "name": "p_thumb4",
+          "value": "/photo/20.jpg"
+        },
+        {
+          "name": "p_thumb5",
+          "value": "/photo/21.jpg"
+        },
+        {
+          "name": "p_thumb6",
+          "value": "/photo/22.jpg"
+        },
+        {
+          "name": "p_thumb7",
+          "value": "/photo/23.jpg"
+        },
+        {
+          "name": "p_thumb8",
+          "value": "/photo/24.jpg"
+        },
+        {
+          "name": "p_thumb9",
+          "value": "/photo/25.jpg"
+        },
+        {
+          "name": "p_thumb10",
+          "value": "/photo/26.jpg"
+        },
+        {
+          "name": "p_thumb11",
+          "value": "/photo/27.jpg"
+        },
+        {
+          "name": "p_thumb12",
+          "value": "/photo/28.jpg"
+        },
+        {
+          "name": "p_thumb13",
+          "value": "/photo/29.jpg"
+        }
+      ]
+    },
+    {
+      "category": "Logistica",
+      "images": [
+        {
+          "name": "p_thumb1",
+          "value": "/photo/30.jpg"
+        },
+        {
+          "name": "p_thumb2",
+          "value": "/photo/31.jpg"
+        },
+        {
+          "name": "p_thumb3",
+          "value": "/photo/32.jpg"
+        },
+        {
+          "name": "p_thumb4",
+          "value": "/photo/33.jpg"
+        },
+        {
+          "name": "p_thumb5",
+          "value": "/photo/34.jpg"
+        },
+        {
+          "name": "p_thumb6",
+          "value": "/photo/35.jpg"
+        },
+        {
+          "name": "p_thumb7",
+          "value": "/photo/36.jpg"
+        }
+      ]
+    },
+    {
+      "category": "Distributori",
+      "images": [
+        {
+          "name": "p_thumb1",
+          "value": "/photo/40.jpg"
+        },
+        {
+          "name": "p_thumb2",
+          "value": "/photo/41.jpg"
+        },
+        {
+          "name": "p_thumb3",
+          "value": "/photo/42.jpg"
+        }
+      ]
+    }
+  ]
+}

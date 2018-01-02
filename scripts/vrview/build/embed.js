@@ -12096,7 +12096,7 @@ WorldRenderer.prototype.onContextMenu_ = function(e) {
 WorldRenderer.prototype.addImage = function (id, src, pitch, yaw, width, height, distance ) {
   var self = this;
   var texture = new THREE.TextureLoader();
-  loader.crossOrigin = 'anonymous';
+  texture.crossOrigin = 'anonymous';
   texture.load( src, function ( texture ) {
 
     var imageObject = new THREE.Mesh(

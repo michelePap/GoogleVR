@@ -1,0 +1,60 @@
+{
+  "scenes": [
+    {
+      "index": 0,
+      "name": "scene1",
+      "image": "/home/equirectangular.jpg",
+      "hotspots": {
+        "next": {
+          "pitch": -21,
+          "yaw": -115,
+          "radius": 0.05,
+          "distance": 1
+        },
+        "prev": {
+          "pitch": -21,
+          "yaw": -63,
+          "radius": 0.05,
+          "distance": 1
+        }
+      },
+      "image_frame": {
+        "left": {
+          "pitch": 0,
+          "yaw": 32,
+          "width": 0.35,
+          "height": 0.35,
+          "distance": 0.8
+        },
+        "center": {
+          "pitch": 0,
+          "yaw": 0,
+          "width": 0.45,
+          "height": 0.45,
+          "distance": 0.8
+        },
+        "right_top": {
+          "pitch": 12,
+          "yaw": -25,
+          "width": 0.15,
+          "height": 0.15,
+          "distance": 0.8
+        },
+        "right_center": {
+          "pitch": 0,
+          "yaw": -25,
+          "width": 0.15,
+          "height": 0.15,
+          "distance": 0.8
+        },
+        "right_bottom": {
+          "pitch": -12,
+          "yaw": -25,
+          "width": 0.15,
+          "height": 0.15,
+          "distance": 0.8
+        }
+      }
+    }
+  ]
+}
