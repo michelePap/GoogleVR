@@ -73,6 +73,9 @@ function onHotspotClick(e) {
   } else if (e.id == "prev") {
     prevImage();
 
+  } else if (e.id == "cat") {
+    console.log("CAT1");
+
   } else if (e.id) {
     loadScene(e.id);
   }
@@ -172,6 +175,14 @@ function loadScene(id) {
     distance: frame["left"].distance
   });
   addAllImage();
+
+  vrView.addHotspot("cat", {
+    pitch: -39,
+    yaw: -73,
+    radius: 0.05,
+    distance: 1,
+    image: projectsFolder + "/category/Industria.jpg"
+  });
 }
 
 function onVRViewError(e) {

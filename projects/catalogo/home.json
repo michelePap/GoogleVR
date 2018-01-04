@@ -21,37 +21,37 @@
       "image_frame": {
         "left": {
           "pitch": 0,
-          "yaw": 32,
-          "width": 0.35,
-          "height": 0.35,
-          "distance": 0.8
+          "yaw": 31,
+          "width": 0.31,
+          "height": 0.37,
+          "distance": 0.9
         },
         "center": {
           "pitch": 0,
           "yaw": 0,
-          "width": 0.45,
-          "height": 0.45,
+          "width": 0.50,
+          "height": 0.36,
           "distance": 0.8
         },
         "right_top": {
-          "pitch": 12,
+          "pitch": 9,
           "yaw": -25,
-          "width": 0.15,
-          "height": 0.15,
+          "width": 0.18,
+          "height": 0.12,
           "distance": 0.8
         },
         "right_center": {
           "pitch": 0,
           "yaw": -25,
-          "width": 0.15,
-          "height": 0.15,
+          "width": 0.18,
+          "height": 0.12,
           "distance": 0.8
         },
         "right_bottom": {
-          "pitch": -12,
+          "pitch": -9,
           "yaw": -25,
-          "width": 0.15,
-          "height": 0.15,
+          "width": 0.18,
+          "height": 0.12,
           "distance": 0.8
         }
       }

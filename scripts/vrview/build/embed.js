@@ -10382,14 +10382,14 @@ HotspotRenderer.prototype = new EventEmitter();
  * in meters.
  * @param hotspotId {String} The ID of the hotspot.
  */
-HotspotRenderer.prototype.add = function(pitch, yaw, radius, distance, id) {
+HotspotRenderer.prototype.add = function(pitch, yaw, radius, distance, id, image) {
   // If a hotspot already exists with this ID, stop.
   if (this.hotspots[id]) {
     // TODO: Proper error reporting.
     console.error('Attempt to add hotspot with existing id %s.', id);
     return;
   }
-  var hotspot = this.createHotspot_(radius, distance);
+  var hotspot = this.createHotspot_(radius, distance, image);
   hotspot.name = id;
 
   // Position the hotspot based on the pitch and yaw specified.
@@ -10571,23 +10571,55 @@ HotspotRenderer.prototype.getSize_ = function() {
   return this.worldRenderer.renderer.getSize();
 };
 
-HotspotRenderer.prototype.createHotspot_ = function(radius, distance) {
-  var innerGeometry = new THREE.CircleGeometry(radius, 32);
+HotspotRenderer.prototype.createHotspot_ = function(radius, distance, image) {
+  var inner;
+  var outer;
 
-  var innerMaterial = new THREE.MeshBasicMaterial({
-    color: 0xffffff, side: THREE.DoubleSide, transparent: true,
-    opacity: MAX_INNER_OPACITY, depthTest: false
-  });
+  if(image && image != "0") {
 
-  var inner = new THREE.Mesh(innerGeometry, innerMaterial);
+  	var innerGeometry = new THREE.PlaneGeometry(0.20, 0.26);
+  	var innerMaterial = new THREE.MeshBasicMaterial({
+  		color: 0xffffff, side: THREE.DoubleSide, transparent: false,
+  		opacity: MAX_INNER_OPACITY, depthTest: false
+  	});
+
+  	var loader = new THREE.TextureLoader();
+  	loader.crossOrigin = 'anonymous';
+  	loader.load(image, function(texture) {
+  		texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+  		texture.repeat.set(1, 1);
+  		innerMaterial.map = texture;
+  		innerMaterial.map.needsUpdate = true;
+  		innerMaterial.needsUpdate = true;
+  	});
+
+  	inner = new THREE.Mesh(innerGeometry, innerMaterial);
+
+  	var outerMaterial = new THREE.MeshBasicMaterial({
+	  		color: 0xffffff, side: THREE.DoubleSide, transparent: false,
+  		opacity: MAX_OUTER_OPACITY, depthTest: false
+  	});
+  	var outerGeometry = new THREE.PlaneGeometry(0.20, 0.26);
+  	outer = new THREE.Mesh(outerGeometry, outerMaterial);
+
+  } else {
+  	var innerGeometry = new THREE.CircleGeometry(radius, 32);
+  	var innerMaterial = new THREE.MeshBasicMaterial({
+  		color: 0xffffff, side: THREE.DoubleSide, transparent: true,
+  		opacity: MAX_INNER_OPACITY, depthTest: false
+  	});
+
+  	inner = new THREE.Mesh(innerGeometry, innerMaterial);
+
+  	var outerMaterial = new THREE.MeshBasicMaterial({
+  		color: 0xffffff, side: THREE.DoubleSide, transparent: true,
+  		opacity: MAX_OUTER_OPACITY, depthTest: false
+  	});
+  	var outerGeometry = new THREE.RingGeometry(radius * 0.85, radius, 32);
+  	outer = new THREE.Mesh(outerGeometry, outerMaterial);
+  }
+
   inner.name = 'inner';
-
-  var outerMaterial = new THREE.MeshBasicMaterial({
-    color: 0xffffff, side: THREE.DoubleSide, transparent: true,
-    opacity: MAX_OUTER_OPACITY, depthTest: false
-  });
-  var outerGeometry = new THREE.RingGeometry(radius * 0.85, radius, 32);
-  var outer = new THREE.Mesh(outerGeometry, outerMaterial);
   outer.name = 'outer';
 
   // Position at the extreme end of the sphere.
@@ -10988,7 +11020,8 @@ function onAddHotspot(e) {
   var radius = parseFloat(e.radius);
   var distance = parseFloat(e.distance);
   var id = e.id;
-  worldRenderer.hotspotRenderer.add(pitch, yaw, radius, distance, id);
+  var image = e.image;
+  worldRenderer.hotspotRenderer.add(pitch, yaw, radius, distance, id, image);
 }
 
 function onAddImage(e) {
