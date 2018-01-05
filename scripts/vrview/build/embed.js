@@ -10382,14 +10382,14 @@ HotspotRenderer.prototype = new EventEmitter();
  * in meters.
  * @param hotspotId {String} The ID of the hotspot.
  */
-HotspotRenderer.prototype.add = function(pitch, yaw, radius, distance, id, image) {
+HotspotRenderer.prototype.add = function(pitch, yaw, radius, distance, id, image, width, height) {
   // If a hotspot already exists with this ID, stop.
   if (this.hotspots[id]) {
     // TODO: Proper error reporting.
     console.error('Attempt to add hotspot with existing id %s.', id);
     return;
   }
-  var hotspot = this.createHotspot_(radius, distance, image);
+  var hotspot = this.createHotspot_(radius, distance, image, width, height);
   hotspot.name = id;
 
   // Position the hotspot based on the pitch and yaw specified.
@@ -10571,13 +10571,13 @@ HotspotRenderer.prototype.getSize_ = function() {
   return this.worldRenderer.renderer.getSize();
 };
 
-HotspotRenderer.prototype.createHotspot_ = function(radius, distance, image) {
+HotspotRenderer.prototype.createHotspot_ = function(radius, distance, image, width, height) {
   var inner;
   var outer;
 
-  if(image && image != "0") {
+  if(image) {
 
-  	var innerGeometry = new THREE.PlaneGeometry(0.20, 0.26);
+  	var innerGeometry = new THREE.PlaneGeometry(width, height);
   	var innerMaterial = new THREE.MeshBasicMaterial({
   		color: 0xffffff, side: THREE.DoubleSide, transparent: false,
   		opacity: MAX_INNER_OPACITY, depthTest: false
@@ -10599,7 +10599,7 @@ HotspotRenderer.prototype.createHotspot_ = function(radius, distance, image) {
 	  		color: 0xffffff, side: THREE.DoubleSide, transparent: false,
   		opacity: MAX_OUTER_OPACITY, depthTest: false
   	});
-  	var outerGeometry = new THREE.PlaneGeometry(0.20, 0.26);
+  	var outerGeometry = new THREE.PlaneGeometry(width, height);
   	outer = new THREE.Mesh(outerGeometry, outerMaterial);
 
   } else {
@@ -11021,7 +11021,9 @@ function onAddHotspot(e) {
   var distance = parseFloat(e.distance);
   var id = e.id;
   var image = e.image;
-  worldRenderer.hotspotRenderer.add(pitch, yaw, radius, distance, id, image);
+  var width = e.width;
+  var height = e.height;
+  worldRenderer.hotspotRenderer.add(pitch, yaw, radius, distance, id, image, width, height);
 }
 
 function onAddImage(e) {

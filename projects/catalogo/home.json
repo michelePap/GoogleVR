@@ -21,38 +21,61 @@
       "image_frame": {
         "left": {
           "pitch": 0,
-          "yaw": 31,
-          "width": 0.31,
-          "height": 0.37,
+          "yaw": 30.3,
+          "width": 0.22,
+          "height": 0.33,
           "distance": 0.9
         },
         "center": {
           "pitch": 0,
           "yaw": 0,
-          "width": 0.50,
-          "height": 0.36,
-          "distance": 0.8
+          "width": 0.55,
+          "height": 0.41,
+          "distance": 0.9
         },
         "right_top": {
-          "pitch": 9,
-          "yaw": -25,
-          "width": 0.18,
-          "height": 0.12,
-          "distance": 0.8
+          "pitch": 8.5,
+          "yaw": -26.5,
+          "width": 0.13,
+          "height": 0.11,
+          "distance": 0.9
         },
         "right_center": {
           "pitch": 0,
-          "yaw": -25,
-          "width": 0.18,
-          "height": 0.12,
-          "distance": 0.8
+          "yaw": -26.5,
+          "width": 0.13,
+          "height": 0.11,
+          "distance": 0.9
         },
         "right_bottom": {
-          "pitch": -9,
-          "yaw": -25,
-          "width": 0.18,
-          "height": 0.12,
-          "distance": 0.8
+          "pitch": -8.5,
+          "yaw": -26.5,
+          "width": 0.13,
+          "height": 0.11,
+          "distance": 0.9
+        }
+      },
+      "image_cat_frame": {
+        "left": {
+          "pitch": -39,
+          "yaw": -73,          
+          "width": 0.20,
+          "height": 0.26,
+          "distance": 1
+        },
+        "center": {
+          "pitch": -38,
+          "yaw": -92,
+          "width": 0.20,
+          "height": 0.26,
+          "distance": 1
+        },
+        "right": {
+          "pitch": -38,
+          "yaw": -111,
+          "width": 0.20,
+          "height": 0.26,
+          "distance": 1
         }
       }
     }

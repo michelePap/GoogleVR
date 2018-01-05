@@ -480,7 +480,9 @@ Player.prototype.addHotspot = function(hotspotId, params) {
     radius: params.radius,
     distance: params.distance,
     id: hotspotId,
-    image: params.image
+    image: params.image,
+    width: params.width,
+    height: params.height
   };
   this.sender.send({type: Message.ADD_HOTSPOT, data: data});
 };

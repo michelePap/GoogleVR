@@ -1,0 +1,46 @@
+{
+  "photo_cat": [
+    {
+      "name": "p_cat_thumb1",
+      "value": "/category/Industria.jpg"
+    },
+    {
+      "name": "p_cat_thumb2",
+      "value": "/category/Lean.jpg"
+    },
+    {
+      "name": "p_cat_thumb3",
+      "value": "/category/Logistica.jpg"
+    },
+    {
+      "name": "p_cat_thumb4",
+      "value": "/category/Distributori.jpg"
+    }
+  ],
+  "video_cat": [
+    {
+      "name": "v_cat_thumb1",
+      "value": "/category/Auto.jpg"
+    },
+    {
+      "name": "v_cat_thumb2",
+      "value": "/category/Edilizia.jpg"
+    },
+    {
+      "name": "v_cat_thumb3",
+      "value": "/category/Installazioni.jpg"
+    },
+    {
+      "name": "v_cat_thumb4",
+      "value": "/category/Legno.jpg"
+    },
+    {
+      "name": "v_cat_thumb5",
+      "value": "/category/Metallo.jpg"
+    },
+    {
+      "name": "v_cat_thumb6",
+      "value": "/category/Sistemi.jpg"
+    }
+  ]
+}
