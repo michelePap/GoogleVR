@@ -4,15 +4,23 @@ var jsonPhoto;
 var jsonCategory;
 // array con path foto
 var photoList;
+var photoCategoryList;
 // parametri dei 5 frame
 var frame;
+// parametri dei 3 frame delle categorie
+var photocategoryFrame;
 // id dei 4 frame in cui caricare le foto
 var sceneFrame;
+var categoryFrame;
 // indice di photoList dal quale
 // iniziare a caricare le foto
 var photoIndex = 0;
+var categoryIndex = 0;
+// id attuali hotspot categorie foto
+var catPhotoId = new Array();
 // indica il primo caricamento
 var firstLoad = true;
+var firstLoadPhotoCategory = true;
 const projectsFolder = "/GoogleVR/projects/catalogo";
 var jsonpathHome = projectsFolder + "/home.json";
 var jsonpathPhoto = projectsFolder + "/photo.json";
@@ -20,9 +28,13 @@ var jsonpathCategory = projectsFolder + "/category.json";
 
 $.getJSON( jsonpathHome, function( resp ) {
   jsonScene = resp;
+
   frame = jsonScene.scenes[0].image_frame;
   sceneFrame = Object.keys(frame);
   sceneFrame.shift(); // rimuovo il primo frame/left
+
+  photocategoryFrame = jsonScene.scenes[0].image_cat_frame;
+  categoryFrame = Object.keys(photocategoryFrame);
 });
 
 $.getJSON( jsonpathPhoto, function( resp ) {
@@ -31,22 +43,25 @@ $.getJSON( jsonpathPhoto, function( resp ) {
 
 $.getJSON( jsonpathCategory, function( resp ) {
   jsonCategory = resp;
+  photoCategoryList = jsonCategory.photo_cat;
 });
 
+// imposta la categoria delle foto da visualizzare
 function setPhotoCategory(category) {
+  photoIndex = 0; // reset index
+  firstLoad = true;
   photoList = jsonPhoto.photo[category].images;
   setLeftFrame(category);
-  addAllImage();
+  loadImage();
 }
 
-// is_stereo false - immagine convertita
 function onLoad() {
   vrView = new VRView.Player('#vrview', {
     image: 'blank.png',
     preview: 'blank.png',
     width: '100%',
     height: 700,
-    is_stereo: false,
+    is_stereo: false, // is_stereo false - immagine convertita
     is_autopan_off: true,
     default_yaw: -90
   });
@@ -81,6 +96,12 @@ function onHotspotClick(e) {
   } else if (e.id == "prev") {
     prevImage();
 
+  } else if (e.id == "next_cat") {
+    nextCategory();
+
+  } else if (e.id == "prev_cat") {
+    prevCategory();
+
   } else if (e.id) {
     setPhotoCategory(e.id);
   }
@@ -89,7 +110,7 @@ function onHotspotClick(e) {
 // visualizza foto successiva
 function nextImage() {
   photoIndex++;
-  addAllImage();
+  loadImage();
 }
 
 // visualizza foto precedente
@@ -97,17 +118,34 @@ function prevImage() {
   // se ci sono foto precedenti
   if(photoIndex > 0) {
     photoIndex--;
-    addAllImage();
+    loadImage();
   } else {
     console.log("No photo to display");
   }
 }
 
-// carica le foto nei frame
-function addAllImage() {
+// visualizza categoria foto successiva
+function nextCategory() {
+  categoryIndex++;
+  loadImageCategory();
+}
+
+// visualizza categoria foto precedente
+function prevCategory() {
+  if(categoryIndex > 0) {
+    categoryIndex--;
+    loadImageCategory();
+  } else {
+    console.log("No category to display");
+  }
+}
+
+// aggiunge le foto nei frame
+function loadImage() {
   var tempIndex = photoIndex;
   // se l'ultima foto e' stata caricata o e' il primo caricamento
   if((tempIndex + sceneFrame.length) <= photoList.length || firstLoad) {
+    removeImage();
     $.each(sceneFrame, function( index, value) {
       // se ci sono foto da caricare
       if(tempIndex < photoList.length) {
@@ -124,11 +162,6 @@ function addAllImage() {
         return false;
       }
     });
-
-    if(!firstLoad) {
-      console.log("Remove all photos");
-      removeAllImage();
-    }
     firstLoad = false;
 
   } else {
@@ -137,13 +170,12 @@ function addAllImage() {
   }
 }
 
-// a foto del frame a sinistra e' quella della categoria
-// (rimane fissa durante lo scorrimento)
+// aggiunge foto left frame - fissa durante lo scorrimento
 function setLeftFrame(category) {
-  var photoCategory = jsonCategory.photo_cat;
-  vrView.addImage("left", {
+  vrView.removeImage("left");
 
-    src: projectsFolder + photoCategory[category].value,
+  vrView.addImage("left", {
+    src: projectsFolder + photoCategoryList[category].value,
     pitch: frame["left"].pitch,
     yaw: frame["left"].yaw,
     width: frame["left"].width,
@@ -152,10 +184,50 @@ function setLeftFrame(category) {
   });
 }
 
-function removeAllImage() {
+// rimuove tutte le foto dei quattro frame
+function removeImage() {
   $.each(sceneFrame, function( index, value) {
     vrView.removeImage(value);
   });
+}
+
+// rimuove gli hotspot delle categorie delle foto
+function removePhotoCatHotspots() {
+  $.each(catPhotoId, function( index, value ) {
+    vrView.removeHotspot(value);
+  });
+  catPhotoId = new Array();
+}
+
+// aggiunge gli hotspot delle categorie delle foto
+function loadImageCategory() {
+  var tempIndex = categoryIndex;
+  // se l'ultima categoria e' stata caricata o e' il primo caricamento
+  if((tempIndex + categoryFrame.length) <= photoCategoryList.length || firstLoadPhotoCategory) {
+    removePhotoCatHotspots();
+    $.each(categoryFrame, function( index, value) {
+      // se ci sono categorie da caricare
+      if(tempIndex < photoCategoryList.length) {
+        vrView.addHotspot(tempIndex, {
+          pitch: photocategoryFrame[value].pitch,
+          yaw: photocategoryFrame[value].yaw,
+          distance: photocategoryFrame[value].distance,
+          image: projectsFolder + photoCategoryList[tempIndex].value,
+          width: photocategoryFrame[value].width,
+          height: photocategoryFrame[value].height
+        });
+        catPhotoId.push(tempIndex);
+        tempIndex++;
+      } else {
+        return false;
+      }
+    });
+    firstLoadPhotoCategory = false;
+
+  } else {
+    console.log("No photo to display");
+    categoryIndex--;
+  }
 }
 
 function loadScene(id) {
@@ -186,22 +258,7 @@ function loadScene(id) {
 
   var start_category = 0;
   setPhotoCategory(start_category);
-
-  // Carica le categorie
-  var photocategoryFrame = jsonScene.scenes[0].image_cat_frame;
-  var frameId = Object.keys(photocategoryFrame);
-  var photoCategory = jsonCategory.photo_cat;
-  $.each(frameId, function( index, value ) {
-
-    vrView.addHotspot(index, {
-      pitch: photocategoryFrame[value].pitch,
-      yaw: photocategoryFrame[value].yaw,
-      distance: photocategoryFrame[value].distance,
-      image: projectsFolder + photoCategory[index].value,
-      width: photocategoryFrame[value].width,
-      height: photocategoryFrame[value].height
-    });
-  });
+  loadImageCategory();
 }
 
 function onVRViewError(e) {

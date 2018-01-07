@@ -10777,6 +10777,7 @@ IFrameMessageReceiver.prototype.onMessage_ = function(event) {
     case Message.SET_VOLUME:
     case Message.MUTED:
     case Message.ADD_HOTSPOT:
+    case Message.REMOVE_HOTSPOT:
     case Message.ADD_IMAGE:
     case Message.REMOVE_IMAGE:
     case Message.PLAY:
@@ -10888,6 +10889,7 @@ var receiver = new IFrameMessageReceiver();
 receiver.on(Message.PLAY, onPlayRequest);
 receiver.on(Message.PAUSE, onPauseRequest);
 receiver.on(Message.ADD_HOTSPOT, onAddHotspot);
+receiver.on(Message.REMOVE_HOTSPOT, onRemoveHotspot);
 receiver.on(Message.ADD_IMAGE, onAddImage);
 receiver.on(Message.REMOVE_IMAGE, onRemoveImage);
 receiver.on(Message.SET_CONTENT, onSetContent);
@@ -11024,6 +11026,15 @@ function onAddHotspot(e) {
   var width = e.width;
   var height = e.height;
   worldRenderer.hotspotRenderer.add(pitch, yaw, radius, distance, id, image, width, height);
+}
+
+function onRemoveHotspot(e) {
+	if (Util.isDebug()) {
+		console.log('onRemoveHotspot', e);
+	}
+
+	var id = e.id;
+	worldRenderer.hotspotRenderer.remove(id);
 }
 
 function onAddImage(e) {
@@ -12183,6 +12194,7 @@ var Message = {
   PAUSE: 'pause',
   TIMEUPDATE: 'timeupdate',
   ADD_HOTSPOT: 'addhotspot',
+  REMOVE_HOTSPOT: 'removehotspot',
   ADD_IMAGE: 'addimage',
   REMOVE_IMAGE: 'removeimage',
   SET_CONTENT: 'setimage',

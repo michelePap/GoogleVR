@@ -487,6 +487,11 @@ Player.prototype.addHotspot = function(hotspotId, params) {
   this.sender.send({type: Message.ADD_HOTSPOT, data: data});
 };
 
+Player.prototype.removeHotspot = function(hotspotId) {
+  var data = {id: hotspotId};
+  this.sender.send({type: Message.REMOVE_HOTSPOT, data: data});
+};
+
 Player.prototype.addImage = function(imageId, params) {
 
   var data = {
@@ -759,6 +764,7 @@ var Message = {
   PAUSE: 'pause',
   TIMEUPDATE: 'timeupdate',
   ADD_HOTSPOT: 'addhotspot',
+  REMOVE_HOTSPOT: 'removehotspot',
   ADD_IMAGE: 'addimage',
   REMOVE_IMAGE: 'removeimage',
   SET_CONTENT: 'setimage',
