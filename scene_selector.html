@@ -8,7 +8,6 @@
 </head>
 <body>
 
-	<button class="visore">Cambia visore</button><br><br>
 	<div id="vrview"></div>
 
 	<script src="/GoogleVR/scripts/jquery-min.js"></script>
@@ -16,12 +15,7 @@
 		var params = (new URL(window.location.href)).searchParams;
 
 		var jsonpath = params.get("jasonpath");	
-		var folder = params.get("folder");
-
-		$("button").click(function(event) {
-			window.location.href = "qrcode_scanner.html";
-		});
-	
+		var folder = params.get("folder");	
 	</script>
 
 	<script src="/GoogleVR/scripts/vrview/build/vrview.js"></script>
