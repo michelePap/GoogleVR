@@ -511,8 +511,30 @@ Player.prototype.removeImage = function(imageId) {
   this.sender.send({type: Message.REMOVE_IMAGE, data: data});
 }
 
+Player.prototype.addVideo = function(videoId, params) {
+
+  var data = {
+    src: params.src,
+    pitch: params.pitch,
+    yaw: params.yaw,
+    width: params.width,
+    height: params.height,
+    distance: params.distance,
+    id: videoId
+  };
+  this.sender.send({type: Message.ADD_VIDEO, data: data});
+};
+
 Player.prototype.play = function() {
   this.sender.send({type: Message.PLAY});
+};
+
+Player.prototype.playVideo = function() {
+  this.sender.send({type: Message.PLAY_VIDEO});
+};
+
+Player.prototype.pauseVideo = function() {
+  this.sender.send({type: Message.PAUSE_VIDEO});
 };
 
 Player.prototype.pause = function() {
@@ -767,6 +789,9 @@ var Message = {
   REMOVE_HOTSPOT: 'removehotspot',
   ADD_IMAGE: 'addimage',
   REMOVE_IMAGE: 'removeimage',
+  ADD_VIDEO: 'addvideo',
+  PLAY_VIDEO: 'playvideo',
+  PAUSE_VIDEO: 'pausevideo',
   SET_CONTENT: 'setimage',
   SET_VOLUME: 'setvolume',
   MUTED: 'muted',

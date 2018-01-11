@@ -10780,6 +10780,9 @@ IFrameMessageReceiver.prototype.onMessage_ = function(event) {
     case Message.REMOVE_HOTSPOT:
     case Message.ADD_IMAGE:
     case Message.REMOVE_IMAGE:
+    case Message.ADD_VIDEO:
+    case Message.PLAY_VIDEO:
+    case Message.PAUSE_VIDEO:
     case Message.PLAY:
     case Message.PAUSE:
     case Message.SET_CURRENT_TIME:
@@ -10892,6 +10895,9 @@ receiver.on(Message.ADD_HOTSPOT, onAddHotspot);
 receiver.on(Message.REMOVE_HOTSPOT, onRemoveHotspot);
 receiver.on(Message.ADD_IMAGE, onAddImage);
 receiver.on(Message.REMOVE_IMAGE, onRemoveImage);
+receiver.on(Message.ADD_VIDEO, onAddVideo);
+receiver.on(Message.PLAY_VIDEO, onPlayVideo);
+receiver.on(Message.PAUSE_VIDEO, onPauseVideo);
 receiver.on(Message.SET_CONTENT, onSetContent);
 receiver.on(Message.SET_VOLUME, onSetVolume);
 receiver.on(Message.MUTED, onMuted);
@@ -11060,6 +11066,38 @@ function onRemoveImage(e) {
 
 	var id = e.id;
 	worldRenderer.removeImage(id);
+}
+
+function onAddVideo(e) {
+	if (Util.isDebug()) {
+		console.log('onAddVideo', e);
+	}
+
+	var src = e.src;
+    var pitch = e.pitch;
+    var yaw = e.yaw;
+    var width = e.width;
+    var height = e.height;
+    var distance = e.distance;
+    var id = e.id;
+    
+    worldRenderer.addVideo(id, src, pitch, yaw, width, height, distance);
+}
+
+function onPlayVideo(e) {
+	if (Util.isDebug()) {
+		console.log('onPlayVideo', e);
+	}
+
+	worldRenderer.playVideo();
+}
+
+function onPauseVideo(e) {
+	if (Util.isDebug()) {
+		console.log('onPauseVideo', e);
+	}
+
+	worldRenderer.pauseVideo();
 }
 
 function onSetContent(e) {
@@ -12139,19 +12177,19 @@ WorldRenderer.prototype.onContextMenu_ = function(e) {
   return false;
 };
 
-WorldRenderer.prototype.addImage = function (id, src, pitch, yaw, width, height, distance ) {
+WorldRenderer.prototype.addImage = function (id, src, pitch, yaw, width, height, distance) {
   var self = this;
   var texture = new THREE.TextureLoader();
   texture.crossOrigin = 'anonymous';
   texture.load( src, function ( texture ) {
 
     var imageObject = new THREE.Mesh(
-      new THREE.PlaneGeometry( width, height ),
+      new THREE.PlaneGeometry(width, height),
       new THREE.MeshBasicMaterial({ map: texture }),
     );
 
     var quat = new THREE.Quaternion();
-    quat.setFromEuler(new THREE.Euler(THREE.Math.degToRad(pitch), THREE.Math.degToRad(yaw), 0, 'ZYX'));
+    quat.setFromEuler(new THREE.Euler(THREE.Math.degToRad(pitch), THREE.Math.degToRad(yaw), 0, 'YXZ'));
 
     imageObject.position.z = -distance;
     imageObject.position.applyQuaternion(quat);
@@ -12166,6 +12204,45 @@ WorldRenderer.prototype.removeImage = function (id) {
 	var self = this;
 	var imagetoremove = this.scene.getObjectByName(id);
 	self.scene.remove(imagetoremove);
+}
+
+WorldRenderer.prototype.addVideo = function (id, src, pitch, yaw, width, height, distance) {
+	var self = this;
+	var video = document.getElementById('video');
+	video.src = src;
+	video.load();
+	//video.play();
+	var texture = new THREE.VideoTexture(video);
+	texture.needsUpdate;
+	texture.minFilter = THREE.LinearFilter;
+	texture.magFilter = THREE.LinearFilter;
+	texture.format = THREE.RGBFormat;
+	texture.crossOrigin = 'anonymous';
+	
+	var imageObject = new THREE.Mesh(
+		new THREE.PlaneGeometry(width, height),
+		new THREE.MeshBasicMaterial({ map: texture }),);
+
+	var quat = new THREE.Quaternion();
+	quat.setFromEuler(new THREE.Euler(THREE.Math.degToRad(pitch), THREE.Math.degToRad(yaw), 0, 'YXZ'));
+
+	imageObject.position.z = -distance;
+	imageObject.position.applyQuaternion(quat);
+	imageObject.lookAt(new THREE.Vector3());
+	imageObject.name = id;
+
+	self.scene.add( imageObject );
+
+}
+
+WorldRenderer.prototype.playVideo = function() {
+	var video = document.getElementById('video');
+	video.play();
+}
+
+WorldRenderer.prototype.pauseVideo = function() {
+	var video = document.getElementById('video');
+	video.pause();
 }
 
 module.exports = WorldRenderer;
@@ -12197,6 +12274,9 @@ var Message = {
   REMOVE_HOTSPOT: 'removehotspot',
   ADD_IMAGE: 'addimage',
   REMOVE_IMAGE: 'removeimage',
+  ADD_VIDEO: 'addvideo',
+  PLAY_VIDEO: 'playvideo',
+  PAUSE_VIDEO: 'pausevideo',
   SET_CONTENT: 'setimage',
   SET_VOLUME: 'setvolume',
   MUTED: 'muted',

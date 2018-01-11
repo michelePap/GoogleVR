@@ -9,69 +9,93 @@
           "pitch": -21,
           "yaw": -115,
           "radius": 0.05,
-          "distance": 1,
-          "image": "/skincustom/next.png",
-          "width": 0.1,
-          "height": 0.1
+          "distance": 1
         },
         "prev": {
           "pitch": -21,
           "yaw": -63,
           "radius": 0.05,
-          "distance": 1,
-          "image": "/skincustom/prev.png",
-          "width": 0.1,
-          "height": 0.1
+          "distance": 1
         },
         "next_cat": {
           "pitch": -37,
           "yaw": -123,
           "radius": 0.05,
-          "distance": 1,
-          "image": "/skincustom/next.png",
-          "width": 0.1,
-          "height": 0.1
+          "distance": 1
         },
         "prev_cat": {
           "pitch": -37,
           "yaw": -60,
           "radius": 0.05,
-          "distance": 1,
-          "image": "/skincustom/prev.png",
-          "width": 0.1,
-          "height": 0.1
+          "distance": 1
+        },
+        "play": {
+          "pitch": -21,
+          "yaw": 0,
+          "radius": 0.05,
+          "distance": 1
+        },
+        "pause": {
+          "pitch": -21,
+          "yaw": 10,
+          "radius": 0.05,
+          "distance": 1
+        },
+        "next_cat_vid": {
+          "pitch": -44,
+          "yaw": -36,
+          "radius": 0.05,
+          "distance": 1
+        },
+        "prev_cat_vid": {
+          "pitch": -44,
+          "yaw": 34,
+          "radius": 0.05,
+          "distance": 1
+        },
+        "next_vid": {
+          "pitch": -21,
+          "yaw": -36,
+          "radius": 0.05,
+          "distance": 1
+        },
+        "prev_vid": {
+          "pitch": -21,
+          "yaw": 34,
+          "radius": 0.05,
+          "distance": 1
         }
       },
       "image_frame": {
-        "left": {
+        "left_ph": {
           "pitch": 0,
-          "yaw": 30.5,
+          "yaw": 30.4,
           "width": 0.24,
-          "height": 0.36,
+          "height": 0.34,
           "distance": 0.97
         },
-        "center": {
+        "center_ph": {
           "pitch": 0,
           "yaw": 0,
           "width": 0.55,
           "height": 0.41,
           "distance": 0.9
         },
-        "right_top": {
+        "right_top_ph": {
           "pitch": 8.5,
           "yaw": -26.5,
           "width": 0.13,
           "height": 0.11,
           "distance": 0.9
         },
-        "right_center": {
+        "right_center_ph": {
           "pitch": 0,
           "yaw": -26.5,
           "width": 0.13,
           "height": 0.11,
           "distance": 0.9
         },
-        "right_bottom": {
+        "right_bottom_ph": {
           "pitch": -8.5,
           "yaw": -26.5,
           "width": 0.13,
@@ -99,6 +123,66 @@
           "yaw": -111,
           "width": 0.20,
           "height": 0.26,
+          "distance": 1
+        }
+      },
+      "video_frame": {
+        "center_vd": {
+          "pitch": 0,
+          "yaw": 90,
+          "width": 0.65,
+          "height": 0.37,
+          "distance": 0.9
+        },
+        "left_top_vd": {
+          "pitch": 6,
+          "yaw": 124,
+          "width": 0.19,
+          "height": 0.13,
+          "distance": 0.9
+        },
+        "left_bottom_vd": {
+          "pitch": -6,
+          "yaw": 124,
+          "width": 0.19,
+          "height": 0.13,
+          "distance": 0.9
+        },
+        "right_top_vd": {
+          "pitch": 6,
+          "yaw": 57,
+          "width": 0.19,
+          "height": 0.13,
+          "distance": 0.9
+        },
+        "right_bottom_vd": {
+          "pitch": 6,
+          "yaw": 57,
+          "width": 0.19,
+          "height": 0.13,
+          "distance": 0.9
+        }
+      },
+      "video_cat_frame": {
+        "left": {
+          "pitch": -44,
+          "yaw": 20,          
+          "width": 0.195,
+          "height": 0.11,
+          "distance": 1
+        },
+        "center": {
+          "pitch": -44,
+          "yaw": -1,
+          "width": 0.195,
+          "height": 0.12,
+          "distance": 1
+        },
+        "right": {
+          "pitch": -43.5,
+          "yaw": -22,
+          "width": 0.19,
+          "height": 0.12,
           "distance": 1
         }
       }

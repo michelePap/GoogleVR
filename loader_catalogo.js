@@ -2,39 +2,89 @@ var vrView;
 var jsonScene;
 var jsonPhoto;
 var jsonCategory;
+var jsonVideo;
 // array con path foto
 var photoList;
 var photoCategoryList;
-// parametri dei 5 frame
-var frame;
-// parametri dei 3 frame delle categorie
+var videoCategoryList;
+var videoList;
+// parametri dei 5 imageFrame
+var imageFrame;
+// parametri dei 3 imageFrame delle categorie
 var photocategoryFrame;
-// id dei 4 frame in cui caricare le foto
-var sceneFrame;
-var categoryFrame;
+var videocategoryFrame;
+// id dei 4 imageFrame in cui caricare le foto
+var imageFrameId;
+var idphotoCatFrame;
+var videoFrame;
+var videoFrameId;
 // indice di photoList dal quale
 // iniziare a caricare le foto
 var photoIndex = 0;
-var categoryIndex = 0;
+var photoCategoryIndex = 0;
+var videoIndex = 0;
+var videoCategoryIndex = 0;
+// per evitare conflitti con hotspot foto
+var casualNum = 50;
 // id attuali hotspot categorie foto
 var catPhotoId = new Array();
+var catVideoId = new Array();
 // indica il primo caricamento
 var firstLoad = true;
 var firstLoadPhotoCategory = true;
+var firstLoadVideoCategory = true;
 const projectsFolder = "/GoogleVR/projects/catalogo";
 var jsonpathHome = projectsFolder + "/home.json";
 var jsonpathPhoto = projectsFolder + "/photo.json";
 var jsonpathCategory = projectsFolder + "/category.json";
+var jsonpathVideo = projectsFolder + "/video.json";
+// hotspot
+var next;
+var prev;
+var nextPhCat;
+var prevPhCat;
+var nextVidCat;
+var prevVidCat;
+var nextVd;
+var prevVd;
+// hotspot status
+var nextAdded = true;
+var prevAdded = true;
+
+var nextPhCatAdded = true;
+var prevPhCatAdded = true;
+
+var nextVideoAdded = true;
+var prevVideoAdded = true;
+
+var nextVidCatAdded = true;
+var prevVidCatAdded = true;
 
 $.getJSON( jsonpathHome, function( resp ) {
   jsonScene = resp;
 
-  frame = jsonScene.scenes[0].image_frame;
-  sceneFrame = Object.keys(frame);
-  sceneFrame.shift(); // rimuovo il primo frame/left
+  imageFrame = jsonScene.scenes[0].image_frame;
+  imageFrameId = Object.keys(imageFrame);
+  imageFrameId.shift(); // rimuovo il primo imageFrame/left
+  videoFrame = jsonScene.scenes[0].video_frame;
+  videoFrameId = Object.keys(videoFrame);
+  //videoFrameId.shift(); // rimuovo frame centrale
 
   photocategoryFrame = jsonScene.scenes[0].image_cat_frame;
-  categoryFrame = Object.keys(photocategoryFrame);
+  idphotoCatFrame = Object.keys(photocategoryFrame);
+  videocategoryFrame = jsonScene.scenes[0].video_cat_frame;
+  idvideoCatFrame = Object.keys(videocategoryFrame);
+
+  // salvo parametri hotspot
+  next = jsonScene.scenes[0].hotspots.next;
+  prev = jsonScene.scenes[0].hotspots.prev;
+  nextPhCat = jsonScene.scenes[0].hotspots.next_cat;
+  prevPhCat = jsonScene.scenes[0].hotspots.prev_cat;
+  nextVidCat = jsonScene.scenes[0].hotspots.next_cat_vid;
+  prevVidCat = jsonScene.scenes[0].hotspots.prev_cat_vid;
+  nextVd = jsonScene.scenes[0].hotspots.next_vid;
+  prevVd = jsonScene.scenes[0].hotspots.prev_vid;
+
 });
 
 $.getJSON( jsonpathPhoto, function( resp ) {
@@ -44,6 +94,11 @@ $.getJSON( jsonpathPhoto, function( resp ) {
 $.getJSON( jsonpathCategory, function( resp ) {
   jsonCategory = resp;
   photoCategoryList = jsonCategory.photo_cat;
+  videoCategoryList = jsonCategory.video_cat;
+});
+
+$.getJSON( jsonpathVideo, function( resp ) {
+  jsonVideo = resp;
 });
 
 // imposta la categoria delle foto da visualizzare
@@ -55,6 +110,14 @@ function setPhotoCategory(category) {
   loadImage();
 }
 
+// imposta la categoria dei video da visualizzare
+function setVideoCategory(category) {
+  videoIndex = 0;
+  var normalCategory = category - casualNum;
+  videoList = jsonVideo.video[normalCategory].video;
+  loadVideoPreview();
+}
+
 function onLoad() {
   vrView = new VRView.Player('#vrview', {
     image: 'blank.png',
@@ -63,7 +126,7 @@ function onLoad() {
     height: 700,
     is_stereo: false, // is_stereo false - immagine convertita
     is_autopan_off: true,
-    default_yaw: -90
+    default_yaw: 0
   });
 
   vrView.on('ready', onVRViewReady);
@@ -97,13 +160,35 @@ function onHotspotClick(e) {
     prevImage();
 
   } else if (e.id == "next_cat") {
-    nextCategory();
+    nextPhotoCategory();
 
   } else if (e.id == "prev_cat") {
-    prevCategory();
+    prevPhotoCategory();
+
+  } else if (e.id == "next_cat_vid") {
+    nextVideoCategory();
+
+  } else if (e.id == "prev_cat_vid") {
+    prevVideoCategory();
+
+  } else if (e.id == "play") {
+    vrView.playVideo();
+
+  } else if (e.id == "pause") {
+    vrView.pauseVideo();
+
+  } else if (e.id == "next_vid") {
+    nextVideo();
+
+  } else if (e.id == "prev_vid") {
+    prevVideo();
 
   } else if (e.id) {
-    setPhotoCategory(e.id);
+    if (e.id >= casualNum) {
+      setVideoCategory(e.id);
+    } else {
+      setPhotoCategory(e.id);
+    }
   }
 }
 
@@ -125,37 +210,83 @@ function prevImage() {
 }
 
 // visualizza categoria foto successiva
-function nextCategory() {
-  categoryIndex++;
+function nextPhotoCategory() {
+  photoCategoryIndex++;
   loadImageCategory();
 }
 
 // visualizza categoria foto precedente
-function prevCategory() {
-  if(categoryIndex > 0) {
-    categoryIndex--;
+function prevPhotoCategory() {
+  if(photoCategoryIndex > 0) {
+    photoCategoryIndex--;
     loadImageCategory();
   } else {
     console.log("No category to display");
   }
 }
 
-// aggiunge le foto nei frame
+// visualizza categoria video successiva
+function nextVideoCategory() {
+  videoCategoryIndex++;
+  loadVideoCategory();
+}
+
+// visualizza categoria video precedente
+function prevVideoCategory() {
+  if(videoCategoryIndex > 0) {
+    videoCategoryIndex--;
+    loadVideoCategory();
+  } else {
+    console.log("No category to display");
+  }
+}
+
+function nextVideo() {
+  videoIndex++;
+  loadVideoPreview();
+}
+
+function prevVideo() {
+  if(videoIndex > 0) {
+    videoIndex--;
+    loadVideoPreview();
+  } else {
+    console.log("No video to display");
+  }
+}
+
+// aggiunge le foto nei imageFrame
 function loadImage() {
   var tempIndex = photoIndex;
   // se l'ultima foto e' stata caricata o e' il primo caricamento
-  if((tempIndex + sceneFrame.length) <= photoList.length || firstLoad) {
+  if((tempIndex + imageFrameId.length) <= photoList.length || firstLoad) {
     removeImage();
-    $.each(sceneFrame, function( index, value) {
+    $.each(imageFrameId, function(index, value) {
       // se ci sono foto da caricare
       if(tempIndex < photoList.length) {
+        // aggiungo e rimuovo gli hotspot dinamicamente
+        if(tempIndex == 0) {
+          vrView.removeHotspot("prev");
+          prevAdded = false;
+        } else if(!prevAdded && (tempIndex % 4) == 0) {
+          vrView.addHotspot("prev", prev);
+          prevAdded = true;
+        }
+
+        if(tempIndex == photoList.length - 1) {
+          vrView.removeHotspot("next");
+          nextAdded = false;
+        } else if(!nextAdded && (tempIndex % 4) == 0) {
+          vrView.addHotspot("next", next);
+          nextAdded = true;
+        }
         vrView.addImage(value, {
           src: projectsFolder + photoList[tempIndex].value,
-          pitch: frame[value].pitch,
-          yaw: frame[value].yaw,
-          width: frame[value].width,
-          height: frame[value].height,
-          distance: frame[value].distance
+          pitch: imageFrame[value].pitch,
+          yaw: imageFrame[value].yaw,
+          width: imageFrame[value].width,
+          height: imageFrame[value].height,
+          distance: imageFrame[value].distance
         });
         tempIndex++;
       } else {
@@ -163,51 +294,138 @@ function loadImage() {
       }
     });
     firstLoad = false;
-
   } else {
     console.log("No photo to display");
     photoIndex--;
   }
 }
 
-// aggiunge foto left frame - fissa durante lo scorrimento
-function setLeftFrame(category) {
-  vrView.removeImage("left");
+function loadVideoPreview() {
+  var tempIndex = videoIndex;
+  if(tempIndex < videoList.length) {
+    removeVideoPreview();
+    // aggiungo e rimuovo gli hotspot dinamicamente
+    if(tempIndex == 0) {
+      vrView.removeHotspot("prev_vid");
+      prevVideoAdded = false;
+    } else {
+      if(!prevVideoAdded) {
+        vrView.addHotspot("prev_vid", prevVd);
+        prevVideoAdded = true;
+      }
+    }
+    if(tempIndex == (videoList.length - 1)) {
+      vrView.removeHotspot("next_vid");
+      nextVideoAdded = false;
+    } else {
+      if(!nextVideoAdded) {
+        vrView.addHotspot("next_vid", nextVd);
+        nextVideoAdded = true;
+      }
+    }
+    $.each(videoFrameId, function(index, value) {
+      if(tempIndex < videoList.length) {
+        if(index == 0) {
+          var videopath = videoList[tempIndex].value;
+          var videoName = videopath.replace("png", "mp4");
+          vrView.addVideo(value, {
+            src: projectsFolder + videoName,
+            pitch: videoFrame[value].pitch,
+            yaw: videoFrame[value].yaw,
+            width: videoFrame[value].width,
+            height: videoFrame[value].height,
+            distance: videoFrame[value].distance
+          });
+        } else {
+          vrView.addImage(value, {
+            src: projectsFolder + videoList[tempIndex].value,
+            pitch: videoFrame[value].pitch,
+            yaw: videoFrame[value].yaw,
+            width: videoFrame[value].width,
+            height: videoFrame[value].height,
+            distance: videoFrame[value].distance
+          });
+        }
+        tempIndex++;
+      } else {
+        return false;
+      }
+    });
+  } else {
+    console.log("No video to display");
+    videoIndex--;
+  }
+}
 
-  vrView.addImage("left", {
+// aggiunge foto left imageFrame - fissa durante lo scorrimento
+function setLeftFrame(category) {
+
+  vrView.removeImage("left_ph");
+
+  vrView.addImage("left_ph", {
     src: projectsFolder + photoCategoryList[category].value,
-    pitch: frame["left"].pitch,
-    yaw: frame["left"].yaw,
-    width: frame["left"].width,
-    height: frame["left"].height,
-    distance: frame["left"].distance
+    pitch: imageFrame["left_ph"].pitch,
+    yaw: imageFrame["left_ph"].yaw,
+    width: imageFrame["left_ph"].width,
+    height: imageFrame["left_ph"].height,
+    distance: imageFrame["left_ph"].distance
   });
 }
 
-// rimuove tutte le foto dei quattro frame
+// rimuove tutte le foto dei quattro imageFrame
 function removeImage() {
-  $.each(sceneFrame, function( index, value) {
+  $.each(imageFrameId, function(index, value) {
     vrView.removeImage(value);
   });
 }
 
 // rimuove gli hotspot delle categorie delle foto
 function removePhotoCatHotspots() {
-  $.each(catPhotoId, function( index, value ) {
+  $.each(catPhotoId, function(index, value) {
     vrView.removeHotspot(value);
   });
   catPhotoId = new Array();
 }
 
+// rimuove gli hotspot delle categorie dei video
+function removeVideoCatHotspots() {
+  $.each(catVideoId, function(index, value) {
+    vrView.removeHotspot(value);
+  });
+  catVideoId = new Array();
+}
+
+// rimuove le anteprime dei video
+function removeVideoPreview() {
+  $.each(videoFrameId, function(index, value) {
+    vrView.removeImage(value);
+  });
+}
+
 // aggiunge gli hotspot delle categorie delle foto
 function loadImageCategory() {
-  var tempIndex = categoryIndex;
+  var tempIndex = photoCategoryIndex;
   // se l'ultima categoria e' stata caricata o e' il primo caricamento
-  if((tempIndex + categoryFrame.length) <= photoCategoryList.length || firstLoadPhotoCategory) {
+  if((tempIndex + idphotoCatFrame.length) <= photoCategoryList.length || firstLoadPhotoCategory) {
     removePhotoCatHotspots();
-    $.each(categoryFrame, function( index, value) {
+    $.each(idphotoCatFrame, function( index, value) {
       // se ci sono categorie da caricare
       if(tempIndex < photoCategoryList.length) {
+        // aggiungo e rimuovo gli hotspot per scorrere le categorie
+        if(tempIndex == 0) {
+          vrView.removeHotspot("prev_cat");
+          prevPhCatAdded = false;
+        } else if(!prevPhCatAdded && (tempIndex % 3) == 0) {
+          vrView.addHotspot("prev_cat", prevPhCat);
+          prevPhCatAdded = true;
+        }
+        if(tempIndex == photoCategoryList.length - 1) {
+          vrView.removeHotspot("next_cat");
+          nextPhCatAdded = false;
+        } else if(!nextPhCatAdded && (tempIndex % 3) == 0) {
+          vrView.addHotspot("next_cat", nextPhCat);
+          nextPhCatAdded = true;
+        }
         vrView.addHotspot(tempIndex, {
           pitch: photocategoryFrame[value].pitch,
           yaw: photocategoryFrame[value].yaw,
@@ -216,6 +434,7 @@ function loadImageCategory() {
           width: photocategoryFrame[value].width,
           height: photocategoryFrame[value].height
         });
+        // salvo id hotspot aggiunto
         catPhotoId.push(tempIndex);
         tempIndex++;
       } else {
@@ -225,8 +444,57 @@ function loadImageCategory() {
     firstLoadPhotoCategory = false;
 
   } else {
-    console.log("No photo to display");
-    categoryIndex--;
+    console.log("No category to display");
+    photoCategoryIndex--;
+  }
+}
+
+// aggiunge gli hotspot delle categorie dei video
+function loadVideoCategory() {
+  var tempIndex = videoCategoryIndex;
+  // se l'ultima categoria e' stata caricata o e' il primo caricamento
+  if((tempIndex + idvideoCatFrame.length) <= videoCategoryList.length || firstLoadVideoCategory) {
+    removeVideoCatHotspots();
+    var hotspotID;
+    $.each(idvideoCatFrame, function( index, value) {
+      // se ci sono categorie da caricare
+      if(tempIndex < videoCategoryList.length) {
+        // aggiungo e rimuovo gli hotspot dinamicamente
+        if(tempIndex == 0) {
+          vrView.removeHotspot("prev_cat_vid");
+          prevVidCatAdded = false;
+        } else if(!prevVidCatAdded && (tempIndex % 3) == 0) {
+          vrView.addHotspot("prev_cat_vid", prevVidCat);
+          prevVidCatAdded = true;
+        }
+
+        if(tempIndex == videoCategoryList.length - 1) {
+          vrView.removeHotspot("next_cat_vid");
+          nextVidCatAdded = false;
+        } else if(!nextVidCatAdded && (tempIndex % 3) == 0) {
+          vrView.addHotspot("next_cat_vid", nextVidCat);
+          nextVidCatAdded = true;
+        }
+        hotspotID = tempIndex + casualNum;
+        vrView.addHotspot(hotspotID, {
+          pitch: videocategoryFrame[value].pitch,
+          yaw: videocategoryFrame[value].yaw,
+          distance: videocategoryFrame[value].distance,
+          image: projectsFolder + videoCategoryList[tempIndex].value,
+          width: videocategoryFrame[value].width,
+          height: videocategoryFrame[value].height
+        });
+        catVideoId.push(hotspotID);
+        tempIndex++;
+      } else {
+        return false;
+      }
+    });
+    firstLoadVideoCategory = false;
+
+  } else {
+    console.log("No category to display");
+    videoCategoryIndex--;
   }
 }
 
@@ -239,7 +507,7 @@ function loadScene(id) {
     image: projectsFolder + jsonScene.scenes[id].image,
     is_stereo: false,
     is_autopan_off: true,
-    default_yaw: -90
+    default_yaw: 0
   });
 
   // Tutti gli hotspot della scena
@@ -259,6 +527,8 @@ function loadScene(id) {
   var start_category = 0;
   setPhotoCategory(start_category);
   loadImageCategory();
+  setVideoCategory(casualNum);
+  loadVideoCategory();
 }
 
 function onVRViewError(e) {
