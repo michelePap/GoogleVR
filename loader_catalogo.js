@@ -8,25 +8,24 @@ var photoList;
 var photoCategoryList;
 var videoCategoryList;
 var videoList;
-// parametri dei 5 imageFrame
+// parametri dei Frame
 var imageFrame;
+var videoFrame;
 // parametri dei 3 imageFrame delle categorie
 var photocategoryFrame;
 var videocategoryFrame;
 // id dei 4 imageFrame in cui caricare le foto
 var imageFrameId;
 var idphotoCatFrame;
-var videoFrame;
 var videoFrameId;
-// indice di photoList dal quale
-// iniziare a caricare le foto
+// indici di caricamento
 var photoIndex = 0;
 var photoCategoryIndex = 0;
 var videoIndex = 0;
 var videoCategoryIndex = 0;
-// per evitare conflitti con hotspot foto
+// usato per evitare conflitti con hotspot foto
 var casualNum = 50;
-// id attuali hotspot categorie foto
+// id attuali hotspot categorie
 var catPhotoId = new Array();
 var catVideoId = new Array();
 // indica il primo caricamento
@@ -182,6 +181,9 @@ function onHotspotClick(e) {
 
   } else if (e.id == "prev_vid") {
     prevVideo();
+
+  } else if (e.id == "exit") {
+    // TO DO
 
   } else if (e.id) {
     if (e.id >= casualNum) {

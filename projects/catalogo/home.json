@@ -64,6 +64,12 @@
           "yaw": 34,
           "radius": 0.05,
           "distance": 1
+        },
+        "exit": {
+          "pitch": 0,
+          "yaw": -180,
+          "radius": 0.05,
+          "distance": 1
         }
       },
       "image_frame": {
@@ -134,16 +140,9 @@
           "height": 0.37,
           "distance": 0.9
         },
-        "left_top_vd": {
-          "pitch": 6,
-          "yaw": 124,
-          "width": 0.19,
-          "height": 0.13,
-          "distance": 0.9
-        },
-        "left_bottom_vd": {
+        "right_bottom_vd": {
           "pitch": -6,
-          "yaw": 124,
+          "yaw": 57,
           "width": 0.19,
           "height": 0.13,
           "distance": 0.9
@@ -155,9 +154,16 @@
           "height": 0.13,
           "distance": 0.9
         },
-        "right_bottom_vd": {
+        "left_top_vd": {
           "pitch": 6,
-          "yaw": 57,
+          "yaw": 124,
+          "width": 0.19,
+          "height": 0.13,
+          "distance": 0.9
+        },
+        "left_bottom_vd": {
+          "pitch": -6,
+          "yaw": 124,
           "width": 0.19,
           "height": 0.13,
           "distance": 0.9

@@ -14,6 +14,14 @@
         {
           "name": "v_thumb3",
           "value": "/video/6.png"
+        },
+        {
+          "name": "v_thumb4",
+          "value": "/video/18.png"
+        },
+        {
+          "name": "v_thumb5",
+          "value": "/video/19.png"
         }
       ]
     },
@@ -27,6 +35,14 @@
         {
           "name": "v_thumb2",
           "value": "/video/8.png"
+        },
+        {
+          "name": "v_thumb3",
+          "value": "/video/20.png"
+        },
+        {
+          "name": "v_thumb4",
+          "value": "/video/21.png"
         }
       ]
     },
@@ -40,19 +56,14 @@
         {
           "name": "v_thumb2",
           "value": "/video/10.png"
-        }
-      ]
-    },
-    {
-      "category": "Metallo",
-      "video": [
-        {
-          "name": "v_thumb1",
-          "value": "/video/11.png"
         },
         {
-          "name": "v_thumb2",
-          "value": "/video/12.png"
+          "name": "v_thumb3",
+          "value": "/video/22.png"
+        },
+        {
+          "name": "v_thumb4",
+          "value": "/video/23.png"
         }
       ]
     },
@@ -74,41 +85,15 @@
       ]
     },
     {
-      "category": "Auto",
+      "category": "Metallo",
       "video": [
         {
           "name": "v_thumb1",
-          "value": "/video/18.png"
+          "value": "/video/11.png"
         },
         {
           "name": "v_thumb2",
-          "value": "/video/19.png"
-        }
-      ]
-    },
-    {
-      "category": "Edilizia",
-      "video": [
-        {
-          "name": "v_thumb1",
-          "value": "/video/20.png"
-        },
-        {
-          "name": "v_thumb2",
-          "value": "/video/21.png"
-        }
-      ]
-    },
-    {
-      "category": "Installazioni",
-      "video": [
-        {
-          "name": "v_thumb1",
-          "value": "/video/22.png"
-        },
-        {
-          "name": "v_thumb2",
-          "value": "/video/23.png"
+          "value": "/video/12.png"
         }
       ]
     },
