@@ -59,6 +59,8 @@ var prevVideoAdded = true;
 var nextVidCatAdded = true;
 var prevVidCatAdded = true;
 
+var simpleRoom = false;
+
 $.getJSON( jsonpathHome, function( resp ) {
   jsonScene = resp;
 
@@ -123,7 +125,7 @@ function onLoad() {
     preview: 'blank.png',
     width: '100%',
     height: 700,
-    is_stereo: false, // is_stereo false - immagine convertita
+    is_stereo: true,
     is_autopan_off: true,
     default_yaw: 0
   });
@@ -152,7 +154,10 @@ function onGetPosition(e) {
 function onHotspotClick(e) {
   vrView.getPosition()
   console.log('onHotspotClick', e.id);
-  if (e.id == "next") {
+  if(simpleRoom && e.id) {
+    loadScene(e.id);
+
+  } else if (e.id == "next") {
     nextImage();
 
   } else if (e.id == "prev") {
@@ -183,7 +188,15 @@ function onHotspotClick(e) {
     prevVideo();
 
   } else if (e.id == "exit") {
-    // TO DO
+    removeImage();
+    vrView.removeImage("left_ph");
+    removeVideoPreview();
+
+    $.getJSON( "/GoogleVR/projects/catalogo/scene/ninni_2_multi/scene.json", function( resp ) {
+      jsonScene = resp;
+      simpleRoom = true;
+      loadScene(jsonScene.scenes[0].index);
+    });
 
   } else if (e.id) {
     if (e.id >= casualNum) {
@@ -257,7 +270,7 @@ function prevVideo() {
   }
 }
 
-// aggiunge le foto nei imageFrame
+// aggiunge le foto nei frame
 function loadImage() {
   var tempIndex = photoIndex;
   // se l'ultima foto e' stata caricata o e' il primo caricamento
@@ -504,10 +517,9 @@ function loadScene(id) {
   console.log('loadScene', id);
 
   // Set the image
-  // is_stereo false - immagine convertita
   vrView.setContent({
     image: projectsFolder + jsonScene.scenes[id].image,
-    is_stereo: false,
+    is_stereo: true,
     is_autopan_off: true,
     default_yaw: 0
   });
@@ -526,11 +538,13 @@ function loadScene(id) {
     });
   });
 
-  var start_category = 0;
-  setPhotoCategory(start_category);
-  loadImageCategory();
-  setVideoCategory(casualNum);
-  loadVideoCategory();
+  if(!simpleRoom) {
+    var start_category = 0;
+    setPhotoCategory(start_category);
+    loadImageCategory();
+    setVideoCategory(casualNum);
+    loadVideoCategory();
+  }
 }
 
 function onVRViewError(e) {
