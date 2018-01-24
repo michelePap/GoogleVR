@@ -525,10 +525,12 @@ Player.prototype.addVideo = function(videoId, params) {
   this.sender.send({type: Message.ADD_VIDEO, data: data});
 };
 
+// Play video scena
 Player.prototype.play = function() {
   this.sender.send({type: Message.PLAY});
 };
 
+// Play video aggiunti
 Player.prototype.playVideo = function() {
   this.sender.send({type: Message.PLAY_VIDEO});
 };

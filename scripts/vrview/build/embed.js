@@ -12179,25 +12179,35 @@ WorldRenderer.prototype.onContextMenu_ = function(e) {
 
 WorldRenderer.prototype.addImage = function (id, src, pitch, yaw, width, height, distance) {
   var self = this;
-  var texture = new THREE.TextureLoader();
+  var firstQuadrant = 45;
+  var secondQuadrant = 135;
+  var thirdQuadrant = 225;
+  var fourthQuadrant = -45;
+
+  var texture = new THREE.TextureLoader().load( src );
   texture.crossOrigin = 'anonymous';
-  texture.load( src, function ( texture ) {
+  var mesh = new THREE.Mesh(
+  	new THREE.PlaneGeometry(width, height),
+    new THREE.MeshBasicMaterial({ map: texture })
+  );
 
-    var imageObject = new THREE.Mesh(
-      new THREE.PlaneGeometry(width, height),
-      new THREE.MeshBasicMaterial({ map: texture }),
-    );
+  var quat = new THREE.Quaternion();
+  quat.setFromEuler(new THREE.Euler(THREE.Math.degToRad(pitch), THREE.Math.degToRad(yaw), 0, 'YXZ'));
 
-    var quat = new THREE.Quaternion();
-    quat.setFromEuler(new THREE.Euler(THREE.Math.degToRad(pitch), THREE.Math.degToRad(yaw), 0, 'YXZ'));
+  if(yaw > firstQuadrant && yaw < secondQuadrant) {
+  	mesh.rotation.y = (Math.PI / 2);
 
-    imageObject.position.z = -distance;
-    imageObject.position.applyQuaternion(quat);
-    imageObject.lookAt(new THREE.Vector3());
-    imageObject.name = id;
+  } else if(yaw > secondQuadrant && yaw < thirdQuadrant) {
+  	mesh.rotation.y = (Math.PI);
 
-    self.scene.add( imageObject );
-  });
+  } else if(yaw < fourthQuadrant || yaw > thirdQuadrant) {
+  	mesh.rotation.y = (Math.PI / -2);
+  }
+  mesh.position.z = -distance;
+  mesh.scale.copy(new THREE.Vector3(1, 1, 1));
+  mesh.position.applyQuaternion(quat);
+  mesh.name = id;
+  self.scene.add(mesh);
 };
 
 WorldRenderer.prototype.removeImage = function (id) {
@@ -12208,10 +12218,14 @@ WorldRenderer.prototype.removeImage = function (id) {
 
 WorldRenderer.prototype.addVideo = function (id, src, pitch, yaw, width, height, distance) {
 	var self = this;
+	var firstQuadrant = 45;
+	var secondQuadrant = 135;
+	var thirdQuadrant = 225;
+	var fourthQuadrant = -45;
+
 	var video = document.getElementById('video');
 	video.src = src;
 	video.load();
-	//video.play();
 	var texture = new THREE.VideoTexture(video);
 	texture.needsUpdate;
 	texture.minFilter = THREE.LinearFilter;
@@ -12219,20 +12233,28 @@ WorldRenderer.prototype.addVideo = function (id, src, pitch, yaw, width, height,
 	texture.format = THREE.RGBFormat;
 	texture.crossOrigin = 'anonymous';
 	
-	var imageObject = new THREE.Mesh(
+	var mesh = new THREE.Mesh(
 		new THREE.PlaneGeometry(width, height),
-		new THREE.MeshBasicMaterial({ map: texture }),);
+		new THREE.MeshBasicMaterial({ map: texture })
+	);
 
 	var quat = new THREE.Quaternion();
 	quat.setFromEuler(new THREE.Euler(THREE.Math.degToRad(pitch), THREE.Math.degToRad(yaw), 0, 'YXZ'));
 
-	imageObject.position.z = -distance;
-	imageObject.position.applyQuaternion(quat);
-	imageObject.lookAt(new THREE.Vector3());
-	imageObject.name = id;
+	if(yaw > firstQuadrant && yaw < secondQuadrant) {
+		mesh.rotation.y = (Math.PI / 2);
 
-	self.scene.add( imageObject );
+	} else if(yaw > secondQuadrant && yaw < thirdQuadrant) {
+		mesh.rotation.y = (Math.PI);
 
+	} else if(yaw < fourthQuadrant || yaw > thirdQuadrant) {
+		mesh.rotation.y = (Math.PI / -2);
+	}
+	mesh.position.z = -distance;
+	mesh.scale.copy(new THREE.Vector3(1, 1, 1));
+  	mesh.position.applyQuaternion(quat);
+	mesh.name = id;
+	self.scene.add(mesh);
 }
 
 WorldRenderer.prototype.playVideo = function() {

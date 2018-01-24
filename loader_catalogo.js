@@ -538,6 +538,24 @@ function loadScene(id) {
     });
   });
 
+  vrView.addImage("test", {
+    src: projectsFolder + "/category/Industria.jpg",
+    pitch: 0,
+    yaw: 240,
+    width: 0.26,
+    height: 0.35,
+    distance: 0.9
+  });
+
+  vrView.addVideo("videotest", {
+    src: projectsFolder + "/9.mp4",
+    pitch: 0,
+    yaw: 170,
+    width: 0.65,
+    height: 0.37,
+    distance: 0.9
+  });
+
   if(!simpleRoom) {
     var start_category = 0;
     setPhotoCategory(start_category);

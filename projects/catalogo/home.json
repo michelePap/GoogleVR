@@ -75,10 +75,10 @@
       "image_frame": {
         "left_ph": {
           "pitch": 0,
-          "yaw": 30.4,
-          "width": 0.24,
-          "height": 0.34,
-          "distance": 0.97
+          "yaw": 30.6,
+          "width": 0.26,
+          "height": 0.35,
+          "distance": 0.9
         },
         "center_ph": {
           "pitch": 0,
@@ -88,25 +88,25 @@
           "distance": 0.9
         },
         "right_top_ph": {
-          "pitch": 8.5,
-          "yaw": -26.5,
-          "width": 0.13,
+          "pitch": 8.4,
+          "yaw": -26.7,
+          "width": 0.145,
           "height": 0.11,
-          "distance": 0.9
+          "distance": 0.95
         },
         "right_center_ph": {
           "pitch": 0,
-          "yaw": -26.5,
-          "width": 0.13,
+          "yaw": -26.7,
+          "width": 0.145,
           "height": 0.11,
-          "distance": 0.9
+          "distance": 0.95
         },
         "right_bottom_ph": {
-          "pitch": -8.5,
-          "yaw": -26.5,
-          "width": 0.13,
+          "pitch": -8.2,
+          "yaw": -26.7,
+          "width": 0.145,
           "height": 0.11,
-          "distance": 0.9
+          "distance": 0.95
         }
       },
       "image_cat_frame": {
@@ -142,30 +142,30 @@
         },
         "right_bottom_vd": {
           "pitch": -6,
-          "yaw": 57,
-          "width": 0.19,
-          "height": 0.13,
+          "yaw": 56.5,
+          "width": 0.23,
+          "height": 0.14,
           "distance": 0.9
         },
         "right_top_vd": {
           "pitch": 6,
-          "yaw": 57,
-          "width": 0.19,
-          "height": 0.13,
+          "yaw": 56.5,
+          "width": 0.23,
+          "height": 0.14,
           "distance": 0.9
         },
         "left_top_vd": {
           "pitch": 6,
           "yaw": 124,
-          "width": 0.19,
-          "height": 0.13,
+          "width": 0.24,
+          "height": 0.14,
           "distance": 0.9
         },
         "left_bottom_vd": {
           "pitch": -6,
           "yaw": 124,
-          "width": 0.19,
-          "height": 0.13,
+          "width": 0.24,
+          "height": 0.14,
           "distance": 0.9
         }
       },
