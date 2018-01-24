@@ -547,15 +547,6 @@ function loadScene(id) {
     distance: 0.9
   });
 
-  vrView.addVideo("videotest", {
-    src: projectsFolder + "/9.mp4",
-    pitch: 0,
-    yaw: 170,
-    width: 0.65,
-    height: 0.37,
-    distance: 0.9
-  });
-
   if(!simpleRoom) {
     var start_category = 0;
     setPhotoCategory(start_category);
