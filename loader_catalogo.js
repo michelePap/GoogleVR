@@ -530,12 +530,23 @@ function loadScene(id) {
   var sceneHotspots = Object.keys(hotspots);
   $.each(sceneHotspots, function( index, value ) {
 
-    vrView.addHotspot(value, {
-      pitch: hotspots[value].pitch,
-      yaw: hotspots[value].yaw,
-      radius: hotspots[value].radius,
-      distance: hotspots[value].distance
-    });
+    if(simpleRoom) {
+      vrView.addHotspot(value, {
+        pitch: hotspots[value].pitch,
+        yaw: hotspots[value].yaw,
+        radius: hotspots[value].radius,
+        distance: hotspots[value].distance
+      });
+    } else {
+      vrView.addHotspot(value, {
+        pitch: hotspots[value].pitch,
+        yaw: hotspots[value].yaw,
+        distance: hotspots[value].distance,
+        image: hotspots[value].image,
+        width:hotspots[value].width,
+        height: hotspots[value].height
+      });
+    }
   });
 
   /*vrView.addImage("test", {

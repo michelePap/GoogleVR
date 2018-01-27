@@ -3423,6 +3423,10 @@ WebVRManager.prototype.onVRClick_ = function() {
       return;
     }
   }
+  var video = document.getElementById('video');
+  video.play();
+  video.pause();
+  //VR selected video paused
   this.enterVRMode_();
 };
 
