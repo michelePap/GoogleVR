@@ -18,6 +18,7 @@ var videocategoryFrame;
 var imageFrameId;
 var idphotoCatFrame;
 var videoFrameId;
+var idvideoCatFrame;
 // indici di caricamento
 var photoIndex = 0;
 var photoCategoryIndex = 0;
@@ -26,8 +27,8 @@ var videoCategoryIndex = 0;
 // usato per evitare conflitti con hotspot foto
 var casualNum = 50;
 // id attuali hotspot categorie
-var catPhotoId = new Array();
-var catVideoId = new Array();
+var catPhotoId = [];
+var catVideoId = [];
 // indica il primo caricamento
 var firstLoad = true;
 var firstLoadPhotoCategory = true;
@@ -152,42 +153,42 @@ function onGetPosition(e) {
 }
 
 function onHotspotClick(e) {
-  vrView.getPosition()
+  vrView.getPosition();
   console.log('onHotspotClick', e.id);
   if(simpleRoom && e.id) {
     loadScene(e.id);
 
-  } else if (e.id == "next") {
+  } else if (e.id === "next") {
     nextImage();
 
-  } else if (e.id == "prev") {
+  } else if (e.id === "prev") {
     prevImage();
 
-  } else if (e.id == "next_cat") {
+  } else if (e.id === "next_cat") {
     nextPhotoCategory();
 
-  } else if (e.id == "prev_cat") {
+  } else if (e.id === "prev_cat") {
     prevPhotoCategory();
 
-  } else if (e.id == "next_cat_vid") {
+  } else if (e.id === "next_cat_vid") {
     nextVideoCategory();
 
-  } else if (e.id == "prev_cat_vid") {
+  } else if (e.id === "prev_cat_vid") {
     prevVideoCategory();
 
-  } else if (e.id == "play") {
+  } else if (e.id === "play") {
     vrView.playVideo();
 
-  } else if (e.id == "pause") {
+  } else if (e.id === "pause") {
     vrView.pauseVideo();
 
-  } else if (e.id == "next_vid") {
+  } else if (e.id === "next_vid") {
     nextVideo();
 
-  } else if (e.id == "prev_vid") {
+  } else if (e.id === "prev_vid") {
     prevVideo();
 
-  } else if (e.id == "exit") {
+  } else if (e.id === "exit") {
     removeImage();
     vrView.removeImage("left_ph");
     removeVideoPreview();
@@ -280,18 +281,18 @@ function loadImage() {
       // se ci sono foto da caricare
       if(tempIndex < photoList.length) {
         // aggiungo e rimuovo gli hotspot dinamicamente
-        if(tempIndex == 0) {
+        if(tempIndex === 0) {
           vrView.removeHotspot("prev");
           prevAdded = false;
-        } else if(!prevAdded && (tempIndex % 4) == 0) {
+        } else if(!prevAdded && (tempIndex % 4) === 0) {
           vrView.addHotspot("prev", prev);
           prevAdded = true;
         }
 
-        if(tempIndex == photoList.length - 1) {
+        if(tempIndex === photoList.length - 1) {
           vrView.removeHotspot("next");
           nextAdded = false;
-        } else if(!nextAdded && (tempIndex % 4) == 0) {
+        } else if(!nextAdded && (tempIndex % 4) === 0) {
           vrView.addHotspot("next", next);
           nextAdded = true;
         }
@@ -320,7 +321,7 @@ function loadVideoPreview() {
   if(tempIndex < videoList.length) {
     removeVideoPreview();
     // aggiungo e rimuovo gli hotspot dinamicamente
-    if(tempIndex == 0) {
+    if(tempIndex === 0) {
       vrView.removeHotspot("prev_vid");
       prevVideoAdded = false;
     } else {
@@ -329,7 +330,7 @@ function loadVideoPreview() {
         prevVideoAdded = true;
       }
     }
-    if(tempIndex == (videoList.length - 1)) {
+    if(tempIndex === (videoList.length - 1)) {
       vrView.removeHotspot("next_vid");
       nextVideoAdded = false;
     } else {
@@ -340,7 +341,7 @@ function loadVideoPreview() {
     }
     $.each(videoFrameId, function(index, value) {
       if(tempIndex < videoList.length) {
-        if(index == 0) {
+        if(index === 0) {
           var videopath = videoList[tempIndex].value;
           var videoName = videopath.replace("png", "mp4");
           vrView.addVideo(value, {
@@ -399,7 +400,7 @@ function removePhotoCatHotspots() {
   $.each(catPhotoId, function(index, value) {
     vrView.removeHotspot(value);
   });
-  catPhotoId = new Array();
+  catPhotoId = [];
 }
 
 // rimuove gli hotspot delle categorie dei video
@@ -407,7 +408,7 @@ function removeVideoCatHotspots() {
   $.each(catVideoId, function(index, value) {
     vrView.removeHotspot(value);
   });
-  catVideoId = new Array();
+  catVideoId = [];
 }
 
 // rimuove le anteprime dei video
@@ -427,17 +428,17 @@ function loadImageCategory() {
       // se ci sono categorie da caricare
       if(tempIndex < photoCategoryList.length) {
         // aggiungo e rimuovo gli hotspot per scorrere le categorie
-        if(tempIndex == 0) {
+        if(tempIndex === 0) {
           vrView.removeHotspot("prev_cat");
           prevPhCatAdded = false;
-        } else if(!prevPhCatAdded && (tempIndex % 3) == 0) {
+        } else if(!prevPhCatAdded && (tempIndex % 3) === 0) {
           vrView.addHotspot("prev_cat", prevPhCat);
           prevPhCatAdded = true;
         }
-        if(tempIndex == photoCategoryList.length - 1) {
+        if(tempIndex === photoCategoryList.length - 1) {
           vrView.removeHotspot("next_cat");
           nextPhCatAdded = false;
-        } else if(!nextPhCatAdded && (tempIndex % 3) == 0) {
+        } else if(!nextPhCatAdded && (tempIndex % 3) === 0) {
           vrView.addHotspot("next_cat", nextPhCat);
           nextPhCatAdded = true;
         }
@@ -475,7 +476,7 @@ function loadVideoCategory() {
       // se ci sono categorie da caricare
       if(tempIndex < videoCategoryList.length) {
         // aggiungo e rimuovo gli hotspot dinamicamente
-        if(tempIndex == 0) {
+        if(tempIndex === 0) {
           vrView.removeHotspot("prev_cat_vid");
           prevVidCatAdded = false;
         } else if(!prevVidCatAdded && (tempIndex % 3) == 0) {
@@ -483,10 +484,10 @@ function loadVideoCategory() {
           prevVidCatAdded = true;
         }
 
-        if(tempIndex == videoCategoryList.length - 1) {
+        if(tempIndex === videoCategoryList.length - 1) {
           vrView.removeHotspot("next_cat_vid");
           nextVidCatAdded = false;
-        } else if(!nextVidCatAdded && (tempIndex % 3) == 0) {
+        } else if(!nextVidCatAdded && (tempIndex % 3) === 0) {
           vrView.addHotspot("next_cat_vid", nextVidCat);
           nextVidCatAdded = true;
         }

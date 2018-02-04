@@ -27,7 +27,7 @@ function uriToParamsProto(uri) {
 
 function resolveUrl(shorturl) {
 	var urlShortener = "https://www.googleapis.com/urlshortener/v1/url?shortUrl=http://goo.gl/";
-	var key = "AIzaSyC4sZkpQ-kRib06NcGTFVwrFUZJzheP4XA";
+	var key = "AIzaSyDaaa3pC0olr-gyPMjz5cRNfbyeqKkr4eY";
 	var urlRequest = urlShortener + shorturl + "&key=" + key;
 	var arrayUrl;
 

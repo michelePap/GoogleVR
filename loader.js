@@ -39,7 +39,7 @@ function onGetPosition(e) {
 }
 
 function onHotspotClick(e) {
-  vrView.getPosition()
+  vrView.getPosition();
   console.log('onHotspotClick', e.id);
   if (e.id) {
     loadScene(e.id);

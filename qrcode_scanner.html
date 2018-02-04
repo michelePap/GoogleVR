@@ -1,3 +1,4 @@
+<!-- Scanner QR code -->
 <!doctype html>
 <html>
 <head>
@@ -30,13 +31,13 @@
 
     <script>
         var viewerName = localStorage.getItem("NAME_VIEWER");
-        if(viewerName == null) {
+        if(viewerName === null) {
             $("p").append("Cardboard I/O 2014");
 
-        } else if (viewerName == "CardboardV1") {
+        } else if (viewerName === "CardboardV1") {
             $("p").append("Cardboard I/O 2014");
 
-        } else if (viewerName == "CardboardV2") {
+        } else if (viewerName === "CardboardV2") {
             $("p").append("Cardboard I/O 2015");
 
         } else {
