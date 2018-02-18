@@ -155,41 +155,70 @@ function onGetPosition(e) {
 function onHotspotClick(e) {
   vrView.getPosition();
   console.log('onHotspotClick', e.id);
+  if (!e.id) {
+    return;
+  }
+
+  switch (e.id) {
+    case "next":
+      nextImage();
+      break;
+
+    case "prev":
+      prevImage();
+      break;
+
+    case "next_cat":
+      nextPhotoCategory();
+      break;
+
+    case "prev_cat":
+      prevPhotoCategory();
+      break;
+
+    case "next_cat_vid":
+      nextVideoCategory();
+      break;
+
+    case "prev_cat_vid":
+      prevVideoCategory();
+      break;
+
+    case "play":
+      vrView.playVideo();
+      return;
+
+    case "pause":
+      vrView.pauseVideo();
+      break;
+
+    case "next_vid":
+      nextVideo();
+      break;
+
+    case "prev_vid":
+      prevVideo();
+      break;
+
+    case "exit":
+      exitRoom();
+      break;
+  }
+
   if(simpleRoom && e.id) {
     loadScene(e.id);
 
-  } else if (e.id === "next") {
-    nextImage();
+  } else if (e.id >= casualNum) {
+    setVideoCategory(e.id);
 
-  } else if (e.id === "prev") {
-    prevImage();
+  } else if (e.id < casualNum) {
+      setPhotoCategory(e.id);
+  }
+}
 
-  } else if (e.id === "next_cat") {
-    nextPhotoCategory();
-
-  } else if (e.id === "prev_cat") {
-    prevPhotoCategory();
-
-  } else if (e.id === "next_cat_vid") {
-    nextVideoCategory();
-
-  } else if (e.id === "prev_cat_vid") {
-    prevVideoCategory();
-
-  } else if (e.id === "play") {
-    vrView.playVideo();
-
-  } else if (e.id === "pause") {
-    vrView.pauseVideo();
-
-  } else if (e.id === "next_vid") {
-    nextVideo();
-
-  } else if (e.id === "prev_vid") {
-    prevVideo();
-
-  } else if (e.id === "exit") {
-    removeImage();
+// rimuove i contenuti multimediali e carica una scena semplice
+function exitRoom() {
+  removeImage();
     vrView.removeImage("left_ph");
     removeVideoPreview();
 
@@ -198,14 +227,6 @@ function onHotspotClick(e) {
       simpleRoom = true;
       loadScene(jsonScene.scenes[0].index);
     });
-
-  } else if (e.id) {
-    if (e.id >= casualNum) {
-      setVideoCategory(e.id);
-    } else {
-      setPhotoCategory(e.id);
-    }
-  }
 }
 
 // visualizza foto successiva
@@ -305,7 +326,7 @@ function loadImage() {
           distance: imageFrame[value].distance
         });
         tempIndex++;
-      } else {
+      } else { // se non ci sono foto termina il ciclo
         return false;
       }
     });
