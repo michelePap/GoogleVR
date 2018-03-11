@@ -20,6 +20,24 @@ button {
 	border-radius: 8px;
 }
 
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	top: 30px;
+	right:30px;
+	background-color:#0C9;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.my-float{
+	margin-top:18px;
+	font-size:25px;
+}
+
 /* MOBILE */
 @media screen and (max-width: 700px) {
 	iframe {
